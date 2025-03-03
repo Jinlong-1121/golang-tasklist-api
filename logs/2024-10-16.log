@@ -1,0 +1,8 @@
+{"client_ip":"::1", "access_time": "2024-10-16 14:16:43", "method": "GET", "endpoint": "/api/v1/Tasklist/DownloadingToMongoDB?ObjectID=670f67c4b4cfc758b99b8c65", "status_code": 200, "latency": "19.5274ms", "user_agent": "PostmanRuntime/7.42.0", "error": ""}
+[GIN] 2024/10/16 - 14:16:43 | 200 |     20.5765ms |             ::1 | GET      "/api/v1/Tasklist/DownloadingToMongoDB?ObjectID=670f67c4b4cfc758b99b8c65"
+{"client_ip":"::1", "access_time": "2024-10-16 15:05:46", "method": "POST", "endpoint": "/api/v1/Tasklist/UploadingToMongoDB", "status_code": 200, "latency": "1.6653909s", "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36", "error": ""}
+[GIN] 2024/10/16 - 15:05:46 | 200 |    1.6653909s |             ::1 | POST     "/api/v1/Tasklist/UploadingToMongoDB"
+{"client_ip":"::1", "access_time": "2024-10-16 15:06:42", "method": "GET", "endpoint": "/api/v1/Tasklist/DownloadingToMongoDB?ObjectID=670f73d8a112952309bf32e0", "status_code": 200, "latency": "629.507ms", "user_agent": "PostmanRuntime/7.42.0", "error": ""}
+[GIN] 2024/10/16 - 15:06:42 | 200 |     629.507ms |             ::1 | GET      "/api/v1/Tasklist/DownloadingToMongoDB?ObjectID=670f73d8a112952309bf32e0"
+{"client_ip":"::1", "access_time": "2024-10-16 15:16:37", "method": "POST", "endpoint": "/api/v1/Tasklist/UploadingToMongoDB", "status_code": 200, "latency": "1.7628326s", "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36", "error": ""}
+[GIN] 2024/10/16 - 15:16:37 | 200 |    1.7628326s |             ::1 | POST     "/api/v1/Tasklist/UploadingToMongoDB"

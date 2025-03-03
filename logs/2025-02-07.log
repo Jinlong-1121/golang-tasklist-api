@@ -1,0 +1,2 @@
+{"client_ip":"::1", "access_time": "2025-02-07 10:17:00", "method": "GET", "endpoint": "/api/v1/Tasklist/GetListData?Param=ValidateUserLevel&Userid=P0124011&TaskID=", "status_code": 200, "latency": "7.4963ms", "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36", "error": ""}
+[GIN] 2025/02/07 - 10:17:00 | 200 |      8.0032ms |             ::1 | GET      "/api/v1/Tasklist/GetListData?Param=ValidateUserLevel&Userid=P0124011&TaskID="

@@ -1,0 +1,2 @@
+{"client_ip":"::1", "access_time": "2024-10-04 17:36:01", "method": "GET", "endpoint": "/api/v1/Tasklist/DownloadingToMongoDB", "status_code": 200, "latency": "11.0128856s", "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36", "error": ""}
+[GIN] 2024/10/04 - 17:36:01 | 200 |   11.0141114s |             ::1 | GET      "/api/v1/Tasklist/DownloadingToMongoDB"

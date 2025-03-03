@@ -1,0 +1,4 @@
+{"client_ip":"::1", "access_time": "2024-10-02 16:07:48", "method": "POST", "endpoint": "/api/v1/Tasklist/InsertingComment", "status_code": 200, "latency": "13.0704576s", "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36", "error": ""}
+[GIN] 2024/10/02 - 16:07:48 | 200 |   13.0714934s |             ::1 | POST     "/api/v1/Tasklist/InsertingComment"
+{"client_ip":"::1", "access_time": "2024-10-02 16:13:54", "method": "POST", "endpoint": "/api/v1/Tasklist/InsertingComment", "status_code": 200, "latency": "2m41.1803734s", "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36", "error": ""}
+[GIN] 2024/10/02 - 16:13:54 | 200 |         2m41s |             ::1 | POST     "/api/v1/Tasklist/InsertingComment"

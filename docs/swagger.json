@@ -1,0 +1,651 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/Tasklist/CreateCategory": {
+            "post": {
+                "parameters": [
+                    {
+                        "description": "Inserting Data",
+                        "name": "file",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.CreateCategoryParam"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/Tasklist/DownloadingToMongoDB": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Upload a file",
+                "responses": {
+                    "200": {
+                        "description": "Successfully uploaded",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/Tasklist/FetchData_Assign_To": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/Tasklist/GetCategory": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/Tasklist/GetDepartemen": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/Tasklist/GetHeaderListData": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/Tasklist/GetListData": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/Tasklist/GetListUserAssignHistory": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/Tasklist/GetListtComments": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/Tasklist/GetNotifTaskList": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/Tasklist/GetUserNotifTaskList": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/Tasklist/GetUserid": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/Tasklist/InsertSchedulerMasterTask": {
+            "post": {
+                "parameters": [
+                    {
+                        "description": "Inserting Data",
+                        "name": "file",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.InsertSchedulerMasterTaskList"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/Tasklist/InsertUpdategroupAssignTO": {
+            "post": {
+                "parameters": [
+                    {
+                        "description": "Inserting Data",
+                        "name": "file",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.InsertUpdategroupAssignTOModels"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/Tasklist/InsertingComment": {
+            "post": {
+                "parameters": [
+                    {
+                        "description": "Inserting Comments",
+                        "name": "file",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.InsertComments"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/Tasklist/InsertingSubtask": {
+            "post": {
+                "summary": "Inserting Subtask",
+                "parameters": [
+                    {
+                        "description": "Inserting Task Manual",
+                        "name": "file",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.InsertingTaskManual"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully uploaded",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/Tasklist/InsertingTaskManual": {
+            "post": {
+                "description": "Upload a file to the specified bucket using the file path and file name.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Inserting Task Manual",
+                "parameters": [
+                    {
+                        "description": "Inserting Task Manual",
+                        "name": "file",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.InsertingTaskManual"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully uploaded",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/Tasklist/UpdateStatusClickednotif": {
+            "post": {
+                "parameters": [
+                    {
+                        "description": "File Upload Info",
+                        "name": "file",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ParamClickedNotif"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/Tasklist/UpdatingProgressTask": {
+            "post": {
+                "description": "Upload a file to the specified bucket using the file path and file name.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Inserting Task Manual",
+                "parameters": [
+                    {
+                        "description": "Updating Progress Task Value",
+                        "name": "file",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ValueUpdateingTask"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully uploaded",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/Tasklist/UploadFile": {
+            "post": {
+                "description": "Upload a file to the specified bucket using the file path and file name.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Upload a file",
+                "parameters": [
+                    {
+                        "description": "File Upload Info",
+                        "name": "file",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.FileUpload"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully uploaded",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/Tasklist/UploadingToMongoDB": {
+            "post": {
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Upload a file",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "File to upload",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully uploaded",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/Tasklist/UploadingToMongoDB_V1": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Upload a file",
+                "parameters": [
+                    {
+                        "description": "File Upload Info",
+                        "name": "file",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.FileUpload"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully uploaded",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.CreateCategoryParam": {
+            "type": "object",
+            "required": [
+                "category",
+                "name"
+            ],
+            "properties": {
+                "category": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.FileUpload": {
+            "type": "object",
+            "required": [
+                "fileName",
+                "filePath"
+            ],
+            "properties": {
+                "fileName": {
+                    "type": "string"
+                },
+                "filePath": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.InsertComments": {
+            "type": "object",
+            "required": [
+                "Comments",
+                "Emp_ID",
+                "Task_ID"
+            ],
+            "properties": {
+                "Comments": {
+                    "type": "string"
+                },
+                "Content_Name": {
+                    "type": "string"
+                },
+                "Emp_ID": {
+                    "type": "string"
+                },
+                "File_Path": {
+                    "type": "string"
+                },
+                "Task_ID": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.InsertSchedulerMasterTaskList": {
+            "type": "object",
+            "properties": {
+                "assign_to": {
+                    "type": "string"
+                },
+                "creator": {
+                    "type": "string"
+                },
+                "dept": {
+                    "type": "string"
+                },
+                "estimasted_time_done": {
+                    "type": "string"
+                },
+                "generate_every": {
+                    "type": "string"
+                },
+                "priority": {
+                    "type": "string"
+                },
+                "remainder_date": {
+                    "type": "string"
+                },
+                "subject": {
+                    "type": "string"
+                },
+                "task_category": {
+                    "type": "string"
+                },
+                "task_name": {
+                    "type": "string"
+                },
+                "topic_code": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.InsertUpdategroupAssignTOModels": {
+            "type": "object",
+            "properties": {
+                "p_assigner": {
+                    "type": "string"
+                },
+                "p_group_assign": {
+                    "type": "string"
+                },
+                "p_param": {
+                    "type": "string"
+                },
+                "p_task_id": {
+                    "type": "string"
+                },
+                "p_user_assign_to": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.InsertingTaskManual": {
+            "type": "object",
+            "properties": {
+                "addwho": {
+                    "type": "string"
+                },
+                "assign_to": {
+                    "type": "string"
+                },
+                "departemen": {
+                    "type": "string"
+                },
+                "end_date": {
+                    "type": "string"
+                },
+                "priority": {
+                    "type": "string"
+                },
+                "remainder_date": {
+                    "type": "string"
+                },
+                "start_date": {
+                    "type": "string"
+                },
+                "subject": {
+                    "type": "string"
+                },
+                "task_id_parent_of": {
+                    "type": "string"
+                },
+                "task_name": {
+                    "type": "string"
+                },
+                "topic": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.ParamClickedNotif": {
+            "type": "object",
+            "properties": {
+                "taskid": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.ValueUpdateingTask": {
+            "type": "object",
+            "properties": {
+                "progresvalue": {
+                    "type": "string"
+                },
+                "task_id": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

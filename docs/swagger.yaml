@@ -1,0 +1,422 @@
+definitions:
+  models.CreateCategoryParam:
+    properties:
+      category:
+        type: string
+      name:
+        type: string
+    required:
+    - category
+    - name
+    type: object
+  models.FileUpload:
+    properties:
+      fileName:
+        type: string
+      filePath:
+        type: string
+    required:
+    - fileName
+    - filePath
+    type: object
+  models.InsertComments:
+    properties:
+      Comments:
+        type: string
+      Content_Name:
+        type: string
+      Emp_ID:
+        type: string
+      File_Path:
+        type: string
+      Task_ID:
+        type: string
+    required:
+    - Comments
+    - Emp_ID
+    - Task_ID
+    type: object
+  models.InsertSchedulerMasterTaskList:
+    properties:
+      assign_to:
+        type: string
+      creator:
+        type: string
+      dept:
+        type: string
+      estimasted_time_done:
+        type: string
+      generate_every:
+        type: string
+      priority:
+        type: string
+      remainder_date:
+        type: string
+      subject:
+        type: string
+      task_category:
+        type: string
+      task_name:
+        type: string
+      topic_code:
+        type: string
+    type: object
+  models.InsertUpdategroupAssignTOModels:
+    properties:
+      p_assigner:
+        type: string
+      p_group_assign:
+        type: string
+      p_param:
+        type: string
+      p_task_id:
+        type: string
+      p_user_assign_to:
+        type: string
+    type: object
+  models.InsertingTaskManual:
+    properties:
+      addwho:
+        type: string
+      assign_to:
+        type: string
+      departemen:
+        type: string
+      end_date:
+        type: string
+      priority:
+        type: string
+      remainder_date:
+        type: string
+      start_date:
+        type: string
+      subject:
+        type: string
+      task_id_parent_of:
+        type: string
+      task_name:
+        type: string
+      topic:
+        type: string
+    type: object
+  models.ParamClickedNotif:
+    properties:
+      taskid:
+        type: string
+    type: object
+  models.ValueUpdateingTask:
+    properties:
+      progresvalue:
+        type: string
+      task_id:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /Tasklist/CreateCategory:
+    post:
+      parameters:
+      - description: Inserting Data
+        in: body
+        name: file
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateCategoryParam'
+      responses: {}
+  /Tasklist/DownloadingToMongoDB:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully uploaded
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Invalid input
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Upload a file
+  /Tasklist/FetchData_Assign_To:
+    get:
+      responses: {}
+  /Tasklist/GetCategory:
+    get:
+      responses: {}
+  /Tasklist/GetDepartemen:
+    get:
+      responses: {}
+  /Tasklist/GetHeaderListData:
+    get:
+      responses: {}
+  /Tasklist/GetListData:
+    get:
+      responses: {}
+  /Tasklist/GetListUserAssignHistory:
+    get:
+      responses: {}
+  /Tasklist/GetListtComments:
+    get:
+      responses: {}
+  /Tasklist/GetNotifTaskList:
+    get:
+      responses: {}
+  /Tasklist/GetUserNotifTaskList:
+    get:
+      responses: {}
+  /Tasklist/GetUserid:
+    get:
+      responses: {}
+  /Tasklist/InsertSchedulerMasterTask:
+    post:
+      parameters:
+      - description: Inserting Data
+        in: body
+        name: file
+        required: true
+        schema:
+          $ref: '#/definitions/models.InsertSchedulerMasterTaskList'
+      responses: {}
+  /Tasklist/InsertUpdategroupAssignTO:
+    post:
+      parameters:
+      - description: Inserting Data
+        in: body
+        name: file
+        required: true
+        schema:
+          $ref: '#/definitions/models.InsertUpdategroupAssignTOModels'
+      responses: {}
+  /Tasklist/InsertingComment:
+    post:
+      parameters:
+      - description: Inserting Comments
+        in: body
+        name: file
+        required: true
+        schema:
+          $ref: '#/definitions/models.InsertComments'
+      responses: {}
+  /Tasklist/InsertingSubtask:
+    post:
+      parameters:
+      - description: Inserting Task Manual
+        in: body
+        name: file
+        required: true
+        schema:
+          $ref: '#/definitions/models.InsertingTaskManual'
+      responses:
+        "200":
+          description: Successfully uploaded
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Invalid input
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Inserting Subtask
+  /Tasklist/InsertingTaskManual:
+    post:
+      consumes:
+      - application/json
+      description: Upload a file to the specified bucket using the file path and file
+        name.
+      parameters:
+      - description: Inserting Task Manual
+        in: body
+        name: file
+        required: true
+        schema:
+          $ref: '#/definitions/models.InsertingTaskManual'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully uploaded
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Invalid input
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Inserting Task Manual
+  /Tasklist/UpdateStatusClickednotif:
+    post:
+      parameters:
+      - description: File Upload Info
+        in: body
+        name: file
+        required: true
+        schema:
+          $ref: '#/definitions/models.ParamClickedNotif'
+      responses: {}
+  /Tasklist/UpdatingProgressTask:
+    post:
+      consumes:
+      - application/json
+      description: Upload a file to the specified bucket using the file path and file
+        name.
+      parameters:
+      - description: Updating Progress Task Value
+        in: body
+        name: file
+        required: true
+        schema:
+          $ref: '#/definitions/models.ValueUpdateingTask'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully uploaded
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Invalid input
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Inserting Task Manual
+  /Tasklist/UploadFile:
+    post:
+      consumes:
+      - application/json
+      description: Upload a file to the specified bucket using the file path and file
+        name.
+      parameters:
+      - description: File Upload Info
+        in: body
+        name: file
+        required: true
+        schema:
+          $ref: '#/definitions/models.FileUpload'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully uploaded
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Invalid input
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Upload a file
+  /Tasklist/UploadingToMongoDB:
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: File to upload
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully uploaded
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Invalid input
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Upload a file
+  /Tasklist/UploadingToMongoDB_V1:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: File Upload Info
+        in: body
+        name: file
+        required: true
+        schema:
+          $ref: '#/definitions/models.FileUpload'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully uploaded
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Invalid input
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Upload a file
+swagger: "2.0"
