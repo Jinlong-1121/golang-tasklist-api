@@ -30,3 +30,13 @@
 [GIN] 2025/03/05 - 11:44:17 | 200 |     4.58987ms |             ::1 | POST     "/api/v1/Tasklist/UpdateStatusClickednotif"
 {"client_ip":"::1", "access_time": "2025-03-05 11:44:31", "method": "POST", "endpoint": "/api/v1/Tasklist/UpdateStatusClickednotif", "status_code": 200, "latency": "12.869156ms", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36", "error": ""}
 [GIN] 2025/03/05 - 11:44:31 | 200 |   12.963684ms |             ::1 | POST     "/api/v1/Tasklist/UpdateStatusClickednotif"
+{"client_ip":"::1", "access_time": "2025-03-05 14:23:45", "method": "OPTIONS", "endpoint": "/api/v1/Tasklist/UpdateStatusClickednotif", "status_code": 204, "latency": "4.876584ms", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36", "error": ""}
+[GIN] 2025/03/05 - 14:23:45 | 204 |   10.715318ms |             ::1 | OPTIONS  "/api/v1/Tasklist/UpdateStatusClickednotif"
+{"client_ip":"::1", "access_time": "2025-03-05 14:23:45", "method": "POST", "endpoint": "/api/v1/Tasklist/UpdateStatusClickednotif", "status_code": 200, "latency": "25.613957ms", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36", "error": ""}
+[GIN] 2025/03/05 - 14:23:45 | 200 |   25.660954ms |             ::1 | POST     "/api/v1/Tasklist/UpdateStatusClickednotif"
+{"client_ip":"::1", "access_time": "2025-03-05 14:50:27", "method": "POST", "endpoint": "/api/v1/Tasklist/UpdateStatusClickednotif", "status_code": 200, "latency": "26.485383ms", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36", "error": ""}
+[GIN] 2025/03/05 - 14:50:27 | 200 |   29.330983ms |             ::1 | POST     "/api/v1/Tasklist/UpdateStatusClickednotif"
+{"client_ip":"::1", "access_time": "2025-03-05 14:51:16", "method": "POST", "endpoint": "/api/v1/Tasklist/UpdateStatusClickednotif", "status_code": 200, "latency": "16.965465ms", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36", "error": ""}
+[GIN] 2025/03/05 - 14:51:16 | 200 |   17.094905ms |             ::1 | POST     "/api/v1/Tasklist/UpdateStatusClickednotif"
+{"client_ip":"::1", "access_time": "2025-03-05 14:51:22", "method": "POST", "endpoint": "/api/v1/Tasklist/UpdateStatusClickednotif", "status_code": 200, "latency": "15.214785ms", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36", "error": ""}
+[GIN] 2025/03/05 - 14:51:22 | 200 |   15.412778ms |             ::1 | POST     "/api/v1/Tasklist/UpdateStatusClickednotif"
