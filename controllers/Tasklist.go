@@ -351,6 +351,125 @@ func (repository *InitRepo) InsertingComment(c *gin.Context) {
 
 }
 
+func (repository *InitRepo) SendingNotifDone(c *gin.Context) {
+	var AddingValue models.InsertingTaskManual
+	if err := c.ShouldBindJSON(&AddingValue); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": ""})
+		return
+	}
+	var Userassignto []models.FetchUsernameAssign
+	var UserReporter []models.FetchUsernameReporter
+	var Taskidftch []models.FetchTaskID
+	var Mailto []models.Mailto
+
+	var username = ""
+	helper.MasterQuery = `select "emp_no","emp_name" from public."dynamic_group" where "emp_no" =` + " '" + AddingValue.Assign_To + "' "
+	errs_1 := helper.MasterExec_Get(repository.DbPg, &Userassignto)
+	if errs_1 != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs_1})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code":  200,
+		"error": false,
+		"data":  Userassignto,
+	})
+	username = Userassignto[0].Emp_Name
+
+	var username_reporter = ""
+	helper.MasterQuery = `select "emp_no","emp_name" from public."dynamic_group" where "emp_no" =` + " '" + AddingValue.Addwho + "' "
+	errs_2 := helper.MasterExec_Get(repository.DbPg, &UserReporter)
+	if errs_2 != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs_2})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code":  200,
+		"error": false,
+		"data":  UserReporter,
+	})
+	username_reporter = UserReporter[0].Emp_Name
+
+	var Taskid = ""
+	helper.MasterQuery = `select "task_id" from public."task_header" where "reporter" = ` + "'" + AddingValue.Addwho + "'" + ` order by "task_id" desc limit 1`
+	errs_3 := helper.MasterExec_Get(repository.DbPg, &Taskidftch)
+	if errs_3 != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs_3})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code":  200,
+		"error": false,
+		"data":  Taskidftch,
+	})
+	Taskid = Taskidftch[0].Task_ID
+
+	var SendMailto = ""
+	helper.MasterQuery = `Select Email from users where number_officer =` + "'" + AddingValue.Assign_To + "' "
+	errs_4 := helper.MasterExec_Get(repository.DbMy, &Mailto)
+	if errs_4 != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs_4})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code":  200,
+		"error": false,
+		"data":  Mailto,
+	})
+	SendMailto = Mailto[0].Email
+
+	var clickdbtn = "<a style='background-color: rgb(255, 198, 39); color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 8px;' href='http://192.168.4.250/sipam/#/tasklist?Taskid=" + Taskid + "'>Show Your Task Here</a>"
+
+	emailData := map[string]interface{}{
+		"email_from":     "SiPAM Notifications (No-Reply)",
+		"email_to":       SendMailto,                    // Jika lebih satu email kasih tnada koma (,)
+		"email_cc":       "",                            // Jika lebih satu email kasih tnada koma (,)
+		"email_template": "Notifications_New_Task.html", // Sesuai dengan nama file HTML
+		"email_subject":  "Notification",                // Subject Email bebas
+		"email_body":     "",
+		"param1":         username_reporter,
+		"param2":         AddingValue.Subject,
+		"param3":         "Status",
+		"param4":         username,
+		"param5":         "DateTaskFinish",
+		"param6":         clickdbtn,
+		"param7":         "",
+		"param8":         "",
+		"param9":         "",
+		"param10":        "",
+		"email_category": "Notification", // Email Catefory bebas
+	}
+	jsonData, err := json.Marshal(emailData)
+	if err != nil {
+		c.PureJSON(http.StatusInternalServerError, gin.H{
+			"code":  500,
+			"error": true,
+			"data":  "Failed to marshal email data",
+		})
+		return
+	}
+	apiURL := "http://192.168.10.203:6069/api/v1/create_email_sender"
+	response, err := http.Post(apiURL, "application/json", bytes.NewBuffer(jsonData))
+	if err != nil {
+		c.PureJSON(http.StatusInternalServerError, gin.H{
+			"code":  500,
+			"error": true,
+			"data":  err.Error(),
+		})
+		return
+	}
+	defer response.Body.Close()
+
+	// Respond with success
+	c.PureJSON(http.StatusOK, gin.H{
+		"code":  200,
+		"error": false,
+		"data":  "Emails sent successfully",
+	})
+	c.JSON(http.StatusOK, gin.H{"message": "Successfully uploaded"})
+
+}
+
 // @Summary Inserting Subtask
 // @Param file body models.InsertingTaskManual true "Inserting Task Manual"
 // @Success 200 {object} map[string]string "Successfully uploaded"
