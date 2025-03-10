@@ -351,8 +351,14 @@ func (repository *InitRepo) InsertingComment(c *gin.Context) {
 
 }
 
+// @Summary Inserting Subtask
+// @Param file body models.WaitingToCloseEmail true "Inserting Task Manual"
+// @Success 200 {object} map[string]string "Successfully uploaded"
+// @Failure 400 {object} map[string]string "Invalid input"
+// @Failure 500 {object} map[string]string "Internal server error"
+// @Router /Tasklist/SendingNotifDone [post]
 func (repository *InitRepo) SendingNotifDone(c *gin.Context) {
-	var AddingValue models.InsertingTaskManual
+	var AddingValue models.WaitingToCloseEmail
 	if err := c.ShouldBindJSON(&AddingValue); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": ""})
 		return
@@ -424,14 +430,14 @@ func (repository *InitRepo) SendingNotifDone(c *gin.Context) {
 		"email_from":     "SiPAM Notifications (No-Reply)",
 		"email_to":       SendMailto,                    // Jika lebih satu email kasih tnada koma (,)
 		"email_cc":       "",                            // Jika lebih satu email kasih tnada koma (,)
-		"email_template": "Notifications_New_Task.html", // Sesuai dengan nama file HTML
+		"email_template": "Email_Waiting_To_Close.html", // Sesuai dengan nama file HTML
 		"email_subject":  "Notification",                // Subject Email bebas
 		"email_body":     "",
 		"param1":         username_reporter,
 		"param2":         AddingValue.Subject,
-		"param3":         "Status",
+		"param3":         "Done",
 		"param4":         username,
-		"param5":         "DateTaskFinish",
+		"param5":         AddingValue.End_Date,
 		"param6":         clickdbtn,
 		"param7":         "",
 		"param8":         "",

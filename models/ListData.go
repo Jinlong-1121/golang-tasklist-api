@@ -113,6 +113,14 @@ type InsertingTaskManual struct {
 	Task_id_parent_of string `json:"task_id_parent_of" `
 }
 
+type WaitingToCloseEmail struct {
+	Task_id   string `json:"task_id" `
+	Assign_To string `json:"assign_to"`
+	Subject   string `json:"subject"`
+	End_Date  string `json:"end_date" `
+	Addwho    string `json:"addwho" `
+}
+
 type ParamUserid struct {
 	Param string `json:"Param" gorm:"varchar(30);"`
 	Pin   string `json:"pin" gorm:"varchar(30);"`
