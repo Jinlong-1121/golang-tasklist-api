@@ -111,6 +111,19 @@ definitions:
       task_id:
         type: string
     type: object
+  models.WaitingToCloseEmail:
+    properties:
+      addwho:
+        type: string
+      assign_to:
+        type: string
+      end_date:
+        type: string
+      subject:
+        type: string
+      task_id:
+        type: string
+    type: object
 info:
   contact: {}
 paths:
@@ -274,6 +287,35 @@ paths:
               type: string
             type: object
       summary: Inserting Task Manual
+  /Tasklist/SendingNotifDone:
+    post:
+      parameters:
+      - description: Inserting Task Manual
+        in: body
+        name: file
+        required: true
+        schema:
+          $ref: '#/definitions/models.WaitingToCloseEmail'
+      responses:
+        "200":
+          description: Successfully uploaded
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Invalid input
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: SendingNotifDone
   /Tasklist/UpdateStatusClickednotif:
     post:
       parameters:

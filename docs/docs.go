@@ -266,6 +266,51 @@ const docTemplate = `{
                 }
             }
         },
+        "/Tasklist/SendingNotifDone": {
+            "post": {
+                "summary": "SendingNotifDone",
+                "parameters": [
+                    {
+                        "description": "Inserting Task Manual",
+                        "name": "file",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.WaitingToCloseEmail"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully uploaded",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/Tasklist/UpdateStatusClickednotif": {
             "post": {
                 "parameters": [
@@ -651,6 +696,26 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "progresvalue": {
+                    "type": "string"
+                },
+                "task_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.WaitingToCloseEmail": {
+            "type": "object",
+            "properties": {
+                "addwho": {
+                    "type": "string"
+                },
+                "assign_to": {
+                    "type": "string"
+                },
+                "end_date": {
+                    "type": "string"
+                },
+                "subject": {
                     "type": "string"
                 },
                 "task_id": {

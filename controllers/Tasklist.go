@@ -351,7 +351,7 @@ func (repository *InitRepo) InsertingComment(c *gin.Context) {
 
 }
 
-// @Summary Inserting Subtask
+// @Summary SendingNotifDone
 // @Param file body models.WaitingToCloseEmail true "Inserting Task Manual"
 // @Success 200 {object} map[string]string "Successfully uploaded"
 // @Failure 400 {object} map[string]string "Invalid input"
@@ -411,7 +411,7 @@ func (repository *InitRepo) SendingNotifDone(c *gin.Context) {
 	Taskid = Taskidftch[0].Task_ID
 
 	var SendMailto = ""
-	helper.MasterQuery = `Select Email from users where number_officer =` + "'" + AddingValue.Assign_To + "' "
+	helper.MasterQuery = `Select Email from users where number_officer =` + "'" + AddingValue.Addwho + "' "
 	errs_4 := helper.MasterExec_Get(repository.DbMy, &Mailto)
 	if errs_4 != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs_4})
@@ -423,8 +423,12 @@ func (repository *InitRepo) SendingNotifDone(c *gin.Context) {
 		"data":  Mailto,
 	})
 	SendMailto = Mailto[0].Email
-
-	var clickdbtn = "<a style='background-color: rgb(255, 198, 39); color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 8px;' href='http://192.168.4.250/sipam/#/tasklist?Taskid=" + Taskid + "'>Show Your Task Here</a>"
+	enddate, err := time.Parse("2006-01-02", AddingValue.End_Date)
+	if err != nil {
+		fmt.Println("Error parsing date:", err)
+		return
+	}
+	var clickdbtn = "<a style='background-color: rgb(255, 198, 39); color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 8px;' href='http://192.168.4.250/sipam/#/tasklist?Taskid=" + Taskid + "&Update=Close'>Close Your Task Here</a>"
 
 	emailData := map[string]interface{}{
 		"email_from":     "SiPAM Notifications (No-Reply)",
@@ -437,7 +441,7 @@ func (repository *InitRepo) SendingNotifDone(c *gin.Context) {
 		"param2":         AddingValue.Subject,
 		"param3":         "Done",
 		"param4":         username,
-		"param5":         AddingValue.End_Date,
+		"param5":         enddate,
 		"param6":         clickdbtn,
 		"param7":         "",
 		"param8":         "",
