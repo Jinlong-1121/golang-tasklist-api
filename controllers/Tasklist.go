@@ -449,11 +449,8 @@ func (repository *InitRepo) SendingNotifDone(c *gin.Context) {
 		"data":  Mailto,
 	})
 	SendMailto = Mailto[0].Email
-	enddate, err := time.Parse("2006-01-02", AddingValue.End_Date)
-	if err != nil {
-		fmt.Println("Error parsing date:", err)
-		return
-	}
+	var CurentDate = time.Now().Format("2006-01-02:15:04")
+
 	var clickdbtn = "<a style='background-color: rgb(255, 198, 39); color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 8px;' href='http://192.168.4.250/sipam/#/tasklist?Taskid=" + Taskid + "&Update=Close'>Close Your Task Here</a>"
 
 	emailData := map[string]interface{}{
@@ -467,7 +464,7 @@ func (repository *InitRepo) SendingNotifDone(c *gin.Context) {
 		"param2":         AddingValue.Subject,
 		"param3":         "Done",
 		"param4":         username,
-		"param5":         enddate,
+		"param5":         CurentDate,
 		"param6":         clickdbtn,
 		"param7":         "",
 		"param8":         "",
