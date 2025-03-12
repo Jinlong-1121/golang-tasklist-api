@@ -125,6 +125,10 @@ type ParamUserid struct {
 	Param string `json:"Param" gorm:"varchar(30);"`
 	Pin   string `json:"pin" gorm:"varchar(30);"`
 }
+
+type ParamGetTaskId struct {
+	Comment_id string `json:"comment_id" gorm:"varchar(30);"`
+}
 type ValueGettingUserid struct {
 	Number_officer string `json:"number_officer" gorm:"varchar(30);"`
 	Name           string `json:"name" gorm:"varchar(100);"`
@@ -149,6 +153,9 @@ var QueryUpdateTask = ""
 type ValueUpdateingTask struct {
 	Task_ID      string `json:"task_id" gorm:"varchar(30);"`
 	ProgresValue string `json:"progresvalue" gorm:"varchar(30);"`
+}
+type ValueGetTaskID struct {
+	Task_ID string `json:"task_id" gorm:"varchar(30);"`
 }
 
 func GenerateValue_UpdateTask(TaskID string, ProgresValue string) {

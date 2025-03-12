@@ -44,6 +44,32 @@ func (repository *InitRepo) GetDepartemen(c *gin.Context) {
 
 }
 
+// GetTaskID godoc
+//
+//	@Router			/Tasklist/GetTaskID [Get]
+func (repository *InitRepo) GetTaskID(c *gin.Context) {
+	var Value []models.ValueGetTaskID
+	var Parameter models.ParamGetTaskId
+
+	if err := c.ShouldBindQuery(&Parameter); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err})
+		return
+	}
+	helper.MasterQuery = models.Query_GettingTaskID + "'" + Parameter.Comment_id + "'"
+	//fmt.Print(helper.MasterQuery)
+	errs := helper.MasterExec_Get(repository.DbPg, &Value)
+	if errs != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code":  200,
+		"error": false,
+		"data":  Value,
+	})
+
+}
+
 // Category godoc
 //
 //	@Router			/Tasklist/GetCategory [Get]

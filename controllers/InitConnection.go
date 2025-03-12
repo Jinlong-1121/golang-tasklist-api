@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"go-todolist/configs"
 	"go-todolist/models"
 
@@ -17,9 +18,14 @@ type InitRepo struct {
 // NewConnection initializes the database connections and returns an InitRepo instance
 func NewConnection() *InitRepo {
 	// Initialize both PostgreSQL and MySQL connections
-	dbPg, _ := configs.InitDbPg()
-	dbMy, _ := configs.InitDbMy()
+	dbPg, err_1 := configs.InitDbPg()
+	dbMy, err_2 := configs.InitDbMy()
 
+	if err_1 != nil && err_2 != nil {
+		fmt.Print("Connection Failed")
+	} else {
+		fmt.Print("Connection Success")
+	}
 	// Auto-migrate models for both databases
 	dbPg.AutoMigrate(&models.DeptList{}) // For PostgreSQL
 	dbMy.AutoMigrate(&models.DeptList{}) // For MySQL

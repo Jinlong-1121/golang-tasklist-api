@@ -111,6 +111,11 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/Tasklist/GetTaskID": {
+            "get": {
+                "responses": {}
+            }
+        },
         "/Tasklist/GetUserNotifTaskList": {
             "get": {
                 "responses": {}

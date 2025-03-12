@@ -28,11 +28,12 @@ var (
 func InitDbPg() (*gorm.DB, error) {
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
 		DB_HOST_PG, DB_USERNAME_PG, DB_PASSWORD_PG, DB_NAME_PG, DB_PORT_PG)
-	fmt.Println("dsn PG : ", dsn)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatal("Error connecting to Postgres database : error=%v", err)
+		fmt.Print("Error connecting to database 01 : error=", err)
 		return nil, err
+	} else {
+		fmt.Println("Db_01 Connected")
 	}
 
 	return db, nil
@@ -41,11 +42,12 @@ func InitDbPg() (*gorm.DB, error) {
 func InitDbMy() (*gorm.DB, error) {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s",
 		DB_USERNAME_MY, DB_PASSWORD_MY, DB_HOST_MY, DB_PORT_MY, DB_NAME_MY)
-	fmt.Println("dsn MY : ", dsn)
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatal("Error connecting to MySQL database : error=%v", err)
+		log.Print("Error connecting to database 02 : error=", err)
 		return nil, err
+	} else {
+		fmt.Println("Db_02 Connected")
 	}
 
 	return db, nil

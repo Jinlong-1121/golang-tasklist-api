@@ -95,6 +95,7 @@ func setupRouter() *gin.Engine {
 			Tasklist.POST("/InsertingSchedulerMasterTask", initrepo.InsertingSchedulerMasterTask)
 			Tasklist.POST("/InsertingSubtask", initrepo.InsertingSubtask)
 			Tasklist.POST("/SendingNotifDone", initrepo.SendingNotifDone)
+			Tasklist.GET("/GetTaskID", initrepo.GetTaskID)
 		}
 	}
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
