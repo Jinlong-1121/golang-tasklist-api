@@ -15,6 +15,7 @@ type ListDataHeader struct {
 	Start_Date          string `json:"start_date"  gorm:"type:timestamp"`
 	Progress_Date       string `json:"progress_date"  gorm:"type:timestamp"`
 	Finish_Date         string `json:"finish_date"  gorm:"type:timestamp"`
+	Close_Date          string `json:"close_date"  gorm:"type:timestamp"`
 	Reporter            string `json:"reporter"  gorm:"type:varchar(100)"`
 	Color               string `json:"color" gorm:"type:varchar(100)"`
 	Task_id_parent_of   string `json:"task_id_parent_of" gorm:"type:varchar(100)"`
@@ -41,6 +42,7 @@ type ListDataDetail struct {
 	Start_Date          string `json:"start_date" gorm:"type:timestamp;"`
 	Progress_Date       string `json:"progress_date" gorm:"type:timestamp;"`
 	Finish_Date         string `json:"finish_date" gorm:"type:timestamp;"`
+	Close_Date          string `json:"close_date" gorm:"type:timestamp;"`
 	Reporter            string `json:"reporter" gorm:"type:varchar(100);"`
 }
 
@@ -52,6 +54,7 @@ type ListDataSummary struct {
 	HOLD        int64 `json:"hold"  gorm:"bigint;"`
 	WARNING     int64 `json:"warning"  gorm:"bigint;"`
 	OUTDATE     int64 `json:"outdate"  gorm:"bigint;"`
+	CLOSE       int64 `json:"close"  gorm:"bigint;"`
 	TOTAL       int64 `json:"total"  gorm:"bigint;"`
 }
 type ListDataAssignTo struct {
@@ -70,9 +73,9 @@ type ListDataParams struct {
 	TaskID string `json:"TaskID" gorm:"varchar(30);"`
 }
 
-var ReturnTableHeader = `("Kpi_Option" varchar,"Subject" varchar,"Task_ID" varchar,"Task_Code" varchar,"Assign_To" varchar,"emp_name" varchar,"Departemen" varchar,"Topic" varchar,"Task_Progress" varchar,"Estimated_Time_Done" timestamp,"Created_Date" timestamp,"Start_Date" timestamp,"Progress_Date" timestamp,"Finish_Date" timestamp,"Reporter" varchar,"Color" varchar,"Task_id_parent_of" varchar);`
-var RetrunTableDetail = `("Task_ID" varchar,"Task_Code" varchar,"Departemen" varchar,"Priority" varchar,"Topic" varchar,"Subject" varchar,"Task_Desc" varchar,"Task_Progress" varchar,"Assign_To" varchar,"User_Assign_To" varchar,"Emp_Name" varchar,"Estimated_Time_Done" timestamp,"Start_Date" timestamp,"Progress_Date" timestamp,"Finish_Date" timestamp,"Reporter" varchar);`
-var ReturnTableSummary = `("Emp_No" varchar,"Emp_Name" varchar,"NEW" bigint,"OPEN" bigint, "IN_PROGRESS" bigint, "DONE" bigint, "HOLD" bigint, "WARNING" bigint, "OUTDATE" bigint, "TOTAL" bigint);`
+var ReturnTableHeader = `("Kpi_Option" varchar,"Subject" varchar,"Task_ID" varchar,"Task_Code" varchar,"Assign_To" varchar,"emp_name" varchar,"Departemen" varchar,"Topic" varchar,"Task_Progress" varchar,"Estimated_Time_Done" timestamp,"Created_Date" timestamp,"Start_Date" timestamp,"Progress_Date" timestamp,"Finish_Date" timestamp,"Close_Date" timestamp,"Reporter" varchar,"Color" varchar,"Task_id_parent_of" varchar);`
+var RetrunTableDetail = `("Task_ID" varchar,"Task_Code" varchar,"Departemen" varchar,"Priority" varchar,"Topic" varchar,"Subject" varchar,"Task_Desc" varchar,"Task_Progress" varchar,"Assign_To" varchar,"User_Assign_To" varchar,"Emp_Name" varchar,"Estimated_Time_Done" timestamp,"Start_Date" timestamp,"Progress_Date" timestamp,"Finish_Date" timestamp,"Close_Date" timestamp,"Reporter" varchar);`
+var ReturnTableSummary = `("Emp_No" varchar,"Emp_Name" varchar,"NEW" bigint,"OPEN" bigint, "IN_PROGRESS" bigint, "DONE" bigint, "HOLD" bigint, "WARNING" bigint, "OUTDATE" bigint,"CLOSE" bigint, "TOTAL" bigint);`
 var RetrunTableAssignTo = `("emp_no" varchar,"emp_name" varchar);`
 var RetrunTableValidateUserLevel = `("Direct_Spv_No" varchar,"Direct_Spv_Name" varchar,"Group_Name" varchar);`
 var Tablereturn = ""
