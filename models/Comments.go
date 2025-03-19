@@ -1,11 +1,12 @@
 package models
 
 type InsertComments struct {
-	Task_ID      string `json:"Task_ID" binding:"required"`
-	Comments     string `json:"Comments" binding:"required"`
-	Emp_ID       string `json:"Emp_ID" binding:"required"`
-	Content_Name string `json:"Content_Name"`
-	File_Path    string `json:"File_Path"`
+	Task_ID      string   `json:"Task_ID" binding:"required"`
+	Comments     string   `json:"Comments" binding:"required"`
+	Emp_ID       string   `json:"Emp_ID" binding:"required"`
+	Content_Name string   `json:"Content_Name"`
+	File_Path    string   `json:"File_Path"`
+	Tagging_User []string `json:"Tagging_User"`
 }
 
 type GetCommentList struct {

@@ -308,11 +308,11 @@ func (repository *InitRepo) FetchData_Assign_To(c *gin.Context) {
 
 func readPdf(path string) (string, error) {
 	f, r, err := pdf.Open(path)
-	// remember close file
-	defer f.Close()
 	if err != nil {
 		return "", err
 	}
+	// remember close file
+	defer f.Close()
 	var buf bytes.Buffer
 	b, err := r.GetPlainText()
 	if err != nil {
@@ -339,6 +339,7 @@ func (repository *InitRepo) InsertingComment(c *gin.Context) {
 		fmt.Println(content)
 		c.JSON(http.StatusOK, gin.H{"message": "Successfully uploaded", "Content": content})
 	} else {
+
 		if AddingValue.File_Path == "" || len(AddingValue.File_Path) < 1 {
 			AddingValue.File_Path = ""
 			helper.MasterQuery = models.Query_InsertingComments + "('" + AddingValue.Task_ID + "','" + AddingValue.Comments + "','" + AddingValue.Emp_ID + "','" + AddingValue.File_Path + "','" + AddingValue.Content_Name + "','')"
@@ -372,6 +373,15 @@ func (repository *InitRepo) InsertingComment(c *gin.Context) {
 				return
 			}
 			c.JSON(http.StatusOK, gin.H{"message": "Successfully uploaded"})
+		}
+
+		for _, value := range AddingValue.Tagging_User {
+			helper.MasterQuery = models.Query_InsertingNotif + "('" + value + "','TaskList_Comments','" + AddingValue.Task_ID + "','" + AddingValue.Comments + "')"
+			errs := helper.MasterExec_Get(repository.DbPg, &Try)
+			if errs != nil {
+				c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs})
+				return
+			}
 		}
 	}
 

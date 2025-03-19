@@ -29,6 +29,10 @@ definitions:
         type: string
       File_Path:
         type: string
+      Tagging_User:
+        items:
+          type: string
+        type: array
       Task_ID:
         type: string
     required:

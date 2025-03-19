@@ -10,6 +10,7 @@ const (
 	Query_GettingUserName               = `Select number_officer,name from users where number_officer = `
 	Query_GettingTaskID                 = `select "task_id" from public."task_comments" where "comment_id" = `
 	Query_UpdateClickedNotif            = `Update public."user_notification_list" set "notif_status" = 'Clicked' where "notif_value" = `
+	Query_InsertingNotif                = `Call public."SP_InsertNotif"`
 	Query_InsertSchedulerMasterTaskList = `Call public."Sp_InsertingSchedulerTask"`
 )
 

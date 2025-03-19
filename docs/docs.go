@@ -588,6 +588,12 @@ const docTemplate = `{
                 "File_Path": {
                     "type": "string"
                 },
+                "Tagging_User": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "Task_ID": {
                     "type": "string"
                 }
