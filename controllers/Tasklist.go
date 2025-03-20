@@ -382,6 +382,7 @@ func (repository *InitRepo) InsertingComment(c *gin.Context) {
 				c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs})
 				return
 			}
+
 		}
 	}
 

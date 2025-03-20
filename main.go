@@ -6,11 +6,8 @@ import (
 	"go-todolist/cors"
 	"go-todolist/docs"
 	"io"
-	"net/http"
 	"os"
 	"time"
-
-	_ "go-todolist/docs"
 
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
@@ -109,15 +106,15 @@ func setupRouter() *gin.Engine {
 // 	v1.GET("/Tasklist/Departemen", controllers.GetDepartemen)
 // }
 
-func pingHandler(c *gin.Context) {
-	c.JSON(http.StatusOK, "pong")
-}
+// func pingHandler(c *gin.Context) {
+// 	c.JSON(http.StatusOK, "pong")
+// }
 
-func pingPostHandler(c *gin.Context) {
-	var input InputRequest
-	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	c.JSON(http.StatusOK, input)
-}
+// func pingPostHandler(c *gin.Context) {
+// 	var input InputRequest
+// 	if err := c.ShouldBindJSON(&input); err != nil {
+// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+// 		return
+// 	}
+// 	c.JSON(http.StatusOK, input)
+// }
