@@ -1,0 +1,12 @@
+{"client_ip":"::1", "access_time": "2025-03-20 09:04:13", "method": "GET", "endpoint": "/swagger/index.html", "status_code": 200, "latency": "232.824µs", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36", "error": ""}
+[GIN] 2025/03/20 - 09:04:13 | 200 |     316.395µs |             ::1 | GET      "/swagger/index.html"
+{"client_ip":"::1", "access_time": "2025-03-20 09:04:13", "method": "GET", "endpoint": "/swagger/swagger-ui.css", "status_code": 200, "latency": "166.173µs", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36", "error": ""}
+[GIN] 2025/03/20 - 09:04:13 | 200 |     199.917µs |             ::1 | GET      "/swagger/swagger-ui.css"
+{"client_ip":"::1", "access_time": "2025-03-20 09:04:13", "method": "GET", "endpoint": "/swagger/swagger-ui-standalone-preset.js", "status_code": 200, "latency": "210.875µs", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36", "error": ""}
+[GIN] 2025/03/20 - 09:04:13 | 200 |     242.147µs |             ::1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+{"client_ip":"::1", "access_time": "2025-03-20 09:04:13", "method": "GET", "endpoint": "/swagger/swagger-ui-bundle.js", "status_code": 200, "latency": "508.575µs", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36", "error": ""}
+[GIN] 2025/03/20 - 09:04:13 | 200 |      524.18µs |             ::1 | GET      "/swagger/swagger-ui-bundle.js"
+{"client_ip":"::1", "access_time": "2025-03-20 09:04:13", "method": "GET", "endpoint": "/swagger/doc.json", "status_code": 200, "latency": "157.142µs", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36", "error": ""}
+[GIN] 2025/03/20 - 09:04:13 | 200 |     189.651µs |             ::1 | GET      "/swagger/doc.json"
+{"client_ip":"::1", "access_time": "2025-03-20 09:04:13", "method": "GET", "endpoint": "/swagger/favicon-32x32.png", "status_code": 200, "latency": "38.362µs", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36", "error": ""}
+[GIN] 2025/03/20 - 09:04:13 | 200 |      68.354µs |             ::1 | GET      "/swagger/favicon-32x32.png"
