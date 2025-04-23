@@ -179,6 +179,9 @@ paths:
   /Tasklist/GetHeaderListData:
     get:
       responses: {}
+  /Tasklist/GetIncomingTask:
+    get:
+      responses: {}
   /Tasklist/GetListData:
     get:
       responses: {}

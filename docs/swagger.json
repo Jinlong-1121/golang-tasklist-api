@@ -80,6 +80,11 @@
                 "responses": {}
             }
         },
+        "/Tasklist/GetIncomingTask": {
+            "get": {
+                "responses": {}
+            }
+        },
         "/Tasklist/GetListData": {
             "get": {
                 "responses": {}

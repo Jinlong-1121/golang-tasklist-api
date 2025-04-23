@@ -243,6 +243,32 @@ func (repository *InitRepo) GetHeaderListData(c *gin.Context) {
 	})
 }
 
+// GetHeaderListData godoc
+//
+//	@Router			/Tasklist/GetIncomingTask [Get]
+func (repository *InitRepo) GetIncomingTask(c *gin.Context) {
+	var Parameter models.ParamGetIncomingTask
+	if err := c.ShouldBindQuery(&Parameter); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	var Output interface{}
+	Output = make([]models.ListIncomingTask, 0)
+	models.GenerateValue_GetIncomingTask(Parameter.Userid)
+	helper.MasterQuery = models.QueryGetListIncomingTask
+	errs := helper.MasterExec_Get(repository.DbPg, &Output)
+	if errs != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code":  200,
+		"error": false,
+		"data":  Output,
+	})
+}
+
 // FetchData_Assign_To godoc
 //
 //	@Router			/Tasklist/FetchData_Assign_To [Get]

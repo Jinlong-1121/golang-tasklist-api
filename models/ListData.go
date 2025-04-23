@@ -45,6 +45,21 @@ type ListDataDetail struct {
 	Close_Date          string `json:"close_date" gorm:"type:timestamp;"`
 	Reporter            string `json:"reporter" gorm:"type:varchar(100);"`
 }
+type ListIncomingTask struct {
+	TaskCode          string `json:"task_code" gorm:"type:varchar(100);"`
+	Departemen        string `json:"departemen" gorm:"type:varchar(100);"`
+	Subject           string `json:"subject" gorm:"type:varchar(255);"`
+	TaskName          string `json:"task_name" gorm:"type:varchar(255);"`
+	TaskCategory      string `json:"task_category" gorm:"type:varchar(100);"`
+	GenerateEvery     string `json:"generate_every" gorm:"type:varchar(100);"`
+	Priority          string `json:"priority" gorm:"type:varchar(100);"`
+	EstimatedTimeDone string `json:"estimated_time_done" gorm:"type:varchar(100);"` // or timestamp if applicable
+	ReminderTask      string `json:"reminder_task" gorm:"type:varchar(100);"`
+	AssignTo          string `json:"assign_to" gorm:"type:varchar(100);"`
+	GenerateEveryDay  int    `json:"generate_every_day" gorm:"type:int;"`
+	RunningAt         string `json:"running_at" gorm:"type:timestamp;"`
+	NextRunningAt     string `json:"next_running_at" gorm:"type:timestamp;"`
+}
 
 type ListDataSummary struct {
 	NEW         int64 `json:"new" gorm:"bigint;"`
@@ -100,6 +115,16 @@ func GenerateValue_ListData(Param string, Userid string, TaskID string) {
 		Tablereturn = RetrunTableAssignTo
 	}
 	QueryGetListData = "Select * from public.SP_New_Version_TaskList_Universal('" + Param + "','" + Userid + "','" + TaskID + "') AS " + Tablereturn
+}
+
+type ParamGetIncomingTask struct {
+	Userid string `json:"userid" gorm:"varchar(30);"`
+}
+
+var QueryGetListIncomingTask = ""
+
+func GenerateValue_GetIncomingTask(AssignTo string) {
+	QueryGetListIncomingTask = `Select * from public.getting_incoming_scheduler_task` + "('" + AssignTo + "')" + `As ("task_code" varchar,"departemen" varchar,"subject" varchar,"task_name" varchar,"task_category" varchar,"generate_every" varchar,"priority" varchar,"estimated_time_done" varchar,"reminder_task" varchar,"assign_to" varchar,"running_at" timestamp,"next_running_at" timestamp);`
 }
 
 type InsertingTaskManual struct {
