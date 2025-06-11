@@ -625,7 +625,7 @@ func (repository *InitRepo) InsertingSubtask(c *gin.Context) {
 		}
 		remainderDate := enddate.AddDate(0, 0, -remainderDays)
 		remainder_date = remainderDate.Format("2006-01-02")
-		helper.MasterQuery = models.Query_InsertSubtask + "('" + AddingValue.Departemen + "', '" + AddingValue.Topic + "', '" + AddingValue.Assign_To + "', '" + AddingValue.Priority + "','" + AddingValue.Subject + "', '" + AddingValue.Task_Name + "', '" + AddingValue.Start_Date + "', '" + AddingValue.End_Date + "', '" + AddingValue.Addwho + "','" + remainder_date + "','" + AddingValue.Task_id_parent_of + "', '"+ AddingValue.Task_type +"')"
+		helper.MasterQuery = models.Query_InsertSubtask + "('" + AddingValue.Departemen + "', '" + AddingValue.Topic + "', '" + AddingValue.Assign_To + "', '" + AddingValue.Priority + "','" + AddingValue.Subject + "', '" + AddingValue.Task_Name + "', '" + AddingValue.Start_Date + "', '" + AddingValue.End_Date + "', '" + AddingValue.Addwho + "','" + remainder_date + "','" + AddingValue.Task_id_parent_of + "', '" + AddingValue.Task_type + "')"
 		errs := helper.MasterExec_Get(repository.DbPg, &AddingValue)
 		if errs != nil {
 			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs})
@@ -675,7 +675,7 @@ func (repository *InitRepo) InsertingSubtask(c *gin.Context) {
 
 		remainderDate := enddate.AddDate(0, 0, -remainderDays)
 		remainder_date = remainderDate.Format("2006-01-02")
-		helper.MasterQuery = models.Query_InsertSubtask + "('" + AddingValue.Departemen + "', '" + AddingValue.Topic + "', '" + AddingValue.Assign_To + "', '" + AddingValue.Priority + "','" + AddingValue.Subject + "', '" + AddingValue.Task_Name + "', '" + AddingValue.Start_Date + "', '" + AddingValue.End_Date + "', '" + AddingValue.Addwho + "','" + remainder_date + "','" + AddingValue.Task_id_parent_of + "', '"+ AddingValue.Task_type +"')"
+		helper.MasterQuery = models.Query_InsertSubtask + "('" + AddingValue.Departemen + "', '" + AddingValue.Topic + "', '" + AddingValue.Assign_To + "', '" + AddingValue.Priority + "','" + AddingValue.Subject + "', '" + AddingValue.Task_Name + "', '" + AddingValue.Start_Date + "', '" + AddingValue.End_Date + "', '" + AddingValue.Addwho + "','" + remainder_date + "','" + AddingValue.Task_id_parent_of + "', '" + AddingValue.Task_type + "')"
 		errs := helper.MasterExec_Get(repository.DbPg, &AddingValue)
 		if errs != nil {
 			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs})
@@ -797,7 +797,7 @@ func (repository *InitRepo) InsertingTaskManual(c *gin.Context) {
 		}
 		remainderDate := enddate.AddDate(0, 0, -remainderDays)
 		remainder_date = remainderDate.Format("2006-01-02")
-		helper.MasterQuery = models.Query_InsertTaskManual + "('" + AddingValue.Departemen + "', '" + AddingValue.Topic + "', '" + AddingValue.Assign_To + "', '" + AddingValue.Priority + "','" + AddingValue.Subject + "', '" + AddingValue.Task_Name + "', '" + AddingValue.Start_Date + "', '" + AddingValue.End_Date + "', '" + AddingValue.Addwho + "','" + remainder_date + "' , '"+ AddingValue.Task_type +"')"
+		helper.MasterQuery = models.Query_InsertTaskManual + "('" + AddingValue.Departemen + "', '" + AddingValue.Topic + "', '" + AddingValue.Assign_To + "', '" + AddingValue.Priority + "','" + AddingValue.Subject + "', '" + AddingValue.Task_Name + "', '" + AddingValue.Start_Date + "', '" + AddingValue.End_Date + "', '" + AddingValue.Addwho + "','" + remainder_date + "' , '" + AddingValue.Task_type + "')"
 		errs := helper.MasterExec_Get(repository.DbPg, &AddingValue)
 		if errs != nil {
 			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs})
@@ -847,7 +847,7 @@ func (repository *InitRepo) InsertingTaskManual(c *gin.Context) {
 
 		remainderDate := enddate.AddDate(0, 0, -remainderDays)
 		remainder_date = remainderDate.Format("2006-01-02")
-		helper.MasterQuery = models.Query_InsertTaskManual + "('" + AddingValue.Departemen + "', '" + AddingValue.Topic + "', '" + AddingValue.Assign_To + "', '" + AddingValue.Priority + "','" + AddingValue.Subject + "', '" + AddingValue.Task_Name + "', '" + AddingValue.Start_Date + "', '" + AddingValue.End_Date + "', '" + AddingValue.Addwho + "','" + remainder_date + "', '"+ AddingValue.Task_type +"')"
+		helper.MasterQuery = models.Query_InsertTaskManual + "('" + AddingValue.Departemen + "', '" + AddingValue.Topic + "', '" + AddingValue.Assign_To + "', '" + AddingValue.Priority + "','" + AddingValue.Subject + "', '" + AddingValue.Task_Name + "', '" + AddingValue.Start_Date + "', '" + AddingValue.End_Date + "', '" + AddingValue.Addwho + "','" + remainder_date + "', '" + AddingValue.Task_type + "')"
 		errs := helper.MasterExec_Get(repository.DbPg, &AddingValue)
 		if errs != nil {
 			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs})
@@ -932,7 +932,6 @@ func (repository *InitRepo) InsertingTaskManual(c *gin.Context) {
 		})
 		c.JSON(http.StatusOK, gin.H{"message": "Successfully uploaded"})
 	}
-
 }
 
 // @Summary Upload a file
@@ -1413,5 +1412,30 @@ func (repository *InitRepo) CreateCategory(c *gin.Context) {
 		"error":   false,
 		"message": "Category created successfully",
 		"data":    Parameter,
+	})
+}
+
+// GetTaskCategory godoc
+// @Summary Get task category list
+// @Description Get all task categories from the task_category table
+// @Tags Tasklist
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.TaskCategory
+// @Failure 500 {object} map[string]interface{}
+// @Router /Tasklist/GetTaskCategory [get]
+func (repository *InitRepo) GetTaskCategory(c *gin.Context) {
+	var taskCategories []models.TaskCategory
+
+	helper.MasterQuery = models.Query_GetTaskCategory
+	errs := helper.MasterExec_Get(repository.DbPg, &taskCategories)
+	if errs != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code":  200,
+		"error": false,
+		"data":  taskCategories,
 	})
 }
