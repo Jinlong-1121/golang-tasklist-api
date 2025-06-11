@@ -97,6 +97,7 @@ func setupRouter() *gin.Engine {
 			Tasklist.GET("/GetCategory", initrepo.GetCategory)
 			Tasklist.GET("/GetTaskCategory", initrepo.GetTaskCategory)
 			Tasklist.GET("/GetListData", initrepo.GetListData)
+			Tasklist.GET("/ValidateDocType", initrepo.ValidateDocType)
 			Tasklist.POST("/UploadFile", initrepo.UploadingFile)
 			Tasklist.POST("/InsertingComment", initrepo.InsertingComment)
 			Tasklist.POST("/InsertingTaskManual", initrepo.InsertingTaskManual)

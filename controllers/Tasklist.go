@@ -152,6 +152,45 @@ func (repository *InitRepo) GetUserid(c *gin.Context) {
 	})
 }
 
+// ValidateDocType godoc
+// @Summary Get document type validation
+// @Description Validate document type for a given task
+// @Tags Tasklist
+// @Accept json
+// @Produce json
+// @Param param query string true "Task ID"
+// @Success 200 {object} object{data=object}
+// @Router /Tasklist/ValidateDocType [get]
+func (repository *InitRepo) ValidateDocType(c *gin.Context) {
+	var Parameter models.ValueValidateDocType
+	if err := c.ShouldBindQuery(&Parameter); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Define a struct to hold the query result
+	type DocTypeResult struct {
+		Type     string `json:"type" gorm:"varchar(100);"`
+		Name     string `json:"name" gorm:"varchar(100);"`
+		TaskType string `json:"task_type" gorm:"varchar(100);"`
+	}
+
+	var results []DocTypeResult
+
+	// Use parameterized query to prevent SQL injection
+	helper.MasterQuery = "SELECT * FROM validate_doc_type('" + Parameter.Param + "') AS t(Type VARCHAR, name VARCHAR, task_type VARCHAR)"
+	errs := helper.MasterExec_Get(repository.DbPg, &results)
+	if errs != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code":  200,
+		"error": false,
+		"data":  results,
+	})
+}
 // GetListtComments godoc
 // @Summary Get list of comments
 // @Description Get comments for a specific task

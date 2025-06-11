@@ -290,6 +290,36 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/Tasklist/GetTaskCategory": {
+            "get": {
+                "description": "Get all task categories from the task_category table",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tasklist"
+                ],
+                "summary": "Get task category list",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.TaskCategory"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
         "/Tasklist/GetTaskID": {
             "get": {
                 "description": "Get task ID information using comment ID",
@@ -803,6 +833,43 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/Tasklist/ValidateDocType": {
+            "get": {
+                "description": "Validate document type for a given task",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tasklist"
+                ],
+                "summary": "Get document type validation",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Task ID",
+                        "name": "param",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -1021,6 +1088,14 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "taskid": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.TaskCategory": {
+            "type": "object",
+            "properties": {
+                "name": {
                     "type": "string"
                 }
             }

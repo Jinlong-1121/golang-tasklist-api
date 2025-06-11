@@ -144,6 +144,11 @@ definitions:
       taskid:
         type: string
     type: object
+  models.TaskCategory:
+    properties:
+      name:
+        type: string
+    type: object
   models.ValueGetTaskID:
     properties:
       task_id:
@@ -365,6 +370,26 @@ paths:
   /Tasklist/GetNotifTaskList:
     get:
       responses: {}
+  /Tasklist/GetTaskCategory:
+    get:
+      consumes:
+      - application/json
+      description: Get all task categories from the task_category table
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TaskCategory'
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get task category list
+      tags:
+      - Tasklist
   /Tasklist/GetTaskID:
     get:
       consumes:
@@ -703,6 +728,30 @@ paths:
               type: string
             type: object
       summary: Upload a file
+  /Tasklist/ValidateDocType:
+    get:
+      consumes:
+      - application/json
+      description: Validate document type for a given task
+      parameters:
+      - description: Task ID
+        in: query
+        name: param
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              data:
+                type: object
+            type: object
+      summary: Get document type validation
+      tags:
+      - Tasklist
 securityDefinitions:
   Bearer:
     description: Type "Bearer" followed by a space and JWT token.

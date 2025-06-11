@@ -162,6 +162,9 @@ type ValueGettingUserid struct {
 	Number_officer string `json:"number_officer" gorm:"varchar(30);"`
 	Name           string `json:"name" gorm:"varchar(100);"`
 }
+type ValueValidateDocType struct {
+	Param string `json:"param" gorm:"varchar(30);"`
+}
 type FetchUsernameAssign struct {
 	Emp_No   string `json:"emp_no" gorm:"varchar(30);"`
 	Emp_Name string `json:"emp_name" gorm:"varchar(100);"`
