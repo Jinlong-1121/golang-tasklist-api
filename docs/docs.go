@@ -9,7 +9,16 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "contact": {},
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
@@ -78,12 +87,78 @@ const docTemplate = `{
         },
         "/Tasklist/GetCategory": {
             "get": {
-                "responses": {}
+                "description": "Get list of categories based on parameter",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tasklist"
+                ],
+                "summary": "Get category list",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Category parameter",
+                        "name": "param",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.CategoryList"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
             }
         },
         "/Tasklist/GetDepartemen": {
             "get": {
-                "responses": {}
+                "description": "Get all departments from the database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tasklist"
+                ],
+                "summary": "Get list of departments",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.DeptList"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
             }
         },
         "/Tasklist/GetHeaderListData": {
@@ -98,7 +173,65 @@ const docTemplate = `{
         },
         "/Tasklist/GetListData": {
             "get": {
-                "responses": {}
+                "description": "Get various types of list data based on parameter",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tasklist"
+                ],
+                "summary": "Get list data",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Parameter type (GetDataHeaderTaskList/GetDataDetailTaskList/SetDataSummaryTaskList/GetDataAssignTo/GetDataAssignToALL/ValidateUserLevel)",
+                        "name": "param",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "userid",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Task ID",
+                        "name": "task_id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
             }
         },
         "/Tasklist/GetListUserAssignHistory": {
@@ -108,7 +241,48 @@ const docTemplate = `{
         },
         "/Tasklist/GetListtComments": {
             "get": {
-                "responses": {}
+                "description": "Get comments for a specific task",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tasklist"
+                ],
+                "summary": "Get list of comments",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Task ID",
+                        "name": "task_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.GetCommentList"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
             }
         },
         "/Tasklist/GetNotifTaskList": {
@@ -118,7 +292,48 @@ const docTemplate = `{
         },
         "/Tasklist/GetTaskID": {
             "get": {
-                "responses": {}
+                "description": "Get task ID information using comment ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tasklist"
+                ],
+                "summary": "Get task ID by comment ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Comment ID",
+                        "name": "comment_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ValueGetTaskID"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
             }
         },
         "/Tasklist/GetUserNotifTaskList": {
@@ -128,7 +343,55 @@ const docTemplate = `{
         },
         "/Tasklist/GetUserid": {
             "get": {
-                "responses": {}
+                "description": "Get user information by PIN",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tasklist"
+                ],
+                "summary": "Get user information",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Parameter type (GetUserid/GetUserName)",
+                        "name": "param",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "User PIN",
+                        "name": "pin",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ValueGettingUserid"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
             }
         },
         "/Tasklist/InsertSchedulerMasterTask": {
@@ -165,10 +428,21 @@ const docTemplate = `{
         },
         "/Tasklist/InsertingComment": {
             "post": {
+                "description": "Add a new comment to a task",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tasklist"
+                ],
+                "summary": "Insert a new comment",
                 "parameters": [
                     {
-                        "description": "Inserting Comments",
-                        "name": "file",
+                        "description": "Comment information",
+                        "name": "comment",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -176,49 +450,26 @@ const docTemplate = `{
                         }
                     }
                 ],
-                "responses": {}
-            }
-        },
-        "/Tasklist/InsertingSubtask": {
-            "post": {
-                "summary": "Inserting Subtask",
-                "parameters": [
-                    {
-                        "description": "Inserting Task Manual",
-                        "name": "file",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.InsertingTaskManual"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
-                        "description": "Successfully uploaded",
+                        "description": "OK",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "additionalProperties": true
                         }
                     },
                     "400": {
-                        "description": "Invalid input",
+                        "description": "Bad Request",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "additionalProperties": true
                         }
                     },
                     "500": {
-                        "description": "Internal server error",
+                        "description": "Internal Server Error",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "additionalProperties": true
                         }
                     }
                 }
@@ -226,18 +477,21 @@ const docTemplate = `{
         },
         "/Tasklist/InsertingTaskManual": {
             "post": {
-                "description": "Upload a file to the specified bucket using the file path and file name.",
+                "description": "Create a new task with manual input",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Inserting Task Manual",
+                "tags": [
+                    "Tasklist"
+                ],
+                "summary": "Insert a new task manually",
                 "parameters": [
                     {
-                        "description": "Inserting Task Manual",
-                        "name": "file",
+                        "description": "Task information",
+                        "name": "task",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -247,30 +501,24 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successfully uploaded",
+                        "description": "OK",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "additionalProperties": true
                         }
                     },
                     "400": {
-                        "description": "Invalid input",
+                        "description": "Bad Request",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "additionalProperties": true
                         }
                     },
                     "500": {
-                        "description": "Internal server error",
+                        "description": "Internal Server Error",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "additionalProperties": true
                         }
                     }
                 }
@@ -339,18 +587,21 @@ const docTemplate = `{
         },
         "/Tasklist/UpdatingProgressTask": {
             "post": {
-                "description": "Upload a file to the specified bucket using the file path and file name.",
+                "description": "Update the progress of a task",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Inserting Task Manual",
+                "tags": [
+                    "Tasklist"
+                ],
+                "summary": "Update task progress",
                 "parameters": [
                     {
-                        "description": "Updating Progress Task Value",
-                        "name": "file",
+                        "description": "Progress information",
+                        "name": "progress",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -360,30 +611,24 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successfully uploaded",
+                        "description": "OK",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "additionalProperties": true
                         }
                     },
                     "400": {
-                        "description": "Invalid input",
+                        "description": "Bad Request",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "additionalProperties": true
                         }
                     },
                     "500": {
-                        "description": "Internal server error",
+                        "description": "Internal Server Error",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "additionalProperties": true
                         }
                     }
                 }
@@ -391,51 +636,46 @@ const docTemplate = `{
         },
         "/Tasklist/UploadFile": {
             "post": {
-                "description": "Upload a file to the specified bucket using the file path and file name.",
+                "description": "Upload a file to the server",
                 "consumes": [
-                    "application/json"
+                    "multipart/form-data"
                 ],
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Tasklist"
+                ],
                 "summary": "Upload a file",
                 "parameters": [
                     {
-                        "description": "File Upload Info",
+                        "type": "file",
+                        "description": "File to upload",
                         "name": "file",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.FileUpload"
-                        }
+                        "in": "formData",
+                        "required": true
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successfully uploaded",
+                        "description": "OK",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "additionalProperties": true
                         }
                     },
                     "400": {
-                        "description": "Invalid input",
+                        "description": "Bad Request",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "additionalProperties": true
                         }
                     },
                     "500": {
-                        "description": "Internal server error",
+                        "description": "Internal Server Error",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "additionalProperties": true
                         }
                     }
                 }
@@ -543,6 +783,17 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "models.CategoryList": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
         "models.CreateCategoryParam": {
             "type": "object",
             "required": [
@@ -552,6 +803,17 @@ const docTemplate = `{
             "properties": {
                 "category": {
                     "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.DeptList": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
                 },
                 "name": {
                     "type": "string"
@@ -569,6 +831,32 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "filePath": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.GetCommentList": {
+            "type": "object",
+            "properties": {
+                "Comment_Date": {
+                    "type": "string"
+                },
+                "Comment_ID": {
+                    "type": "string"
+                },
+                "Comments": {
+                    "type": "string"
+                },
+                "Content_Name": {
+                    "type": "string"
+                },
+                "Emp_ID": {
+                    "type": "string"
+                },
+                "Emp_NAME": {
+                    "type": "string"
+                },
+                "File_ID": {
                     "type": "string"
                 }
             }
@@ -637,6 +925,9 @@ const docTemplate = `{
                 "task_name": {
                     "type": "string"
                 },
+                "task_type": {
+                    "type": "string"
+                },
                 "topic_code": {
                     "type": "string"
                 }
@@ -695,6 +986,9 @@ const docTemplate = `{
                 "task_name": {
                     "type": "string"
                 },
+                "task_type": {
+                    "type": "string"
+                },
                 "topic": {
                     "type": "string"
                 }
@@ -704,6 +998,25 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "taskid": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.ValueGetTaskID": {
+            "type": "object",
+            "properties": {
+                "task_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.ValueGettingUserid": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "number_officer": {
                     "type": "string"
                 }
             }
@@ -739,17 +1052,25 @@ const docTemplate = `{
                 }
             }
         }
+    },
+    "securityDefinitions": {
+        "Bearer": {
+            "description": "Type \"Bearer\" followed by a space and JWT token.",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
     }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "",
-	Host:             "",
-	BasePath:         "",
+	Version:          "1.0",
+	Host:             "localhost:8086",
+	BasePath:         "/api/v1",
 	Schemes:          []string{},
-	Title:            "",
-	Description:      "",
+	Title:            "Tasklist API",
+	Description:      "A Tasklist management service API in Go using Gin framework.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

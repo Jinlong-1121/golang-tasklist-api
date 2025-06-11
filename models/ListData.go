@@ -139,6 +139,7 @@ type InsertingTaskManual struct {
 	Addwho            string `json:"addwho" `
 	Remainder_Date    string `json:"remainder_date" `
 	Task_id_parent_of string `json:"task_id_parent_of" `
+	Task_type         string `json:"task_type" `
 }
 
 type WaitingToCloseEmail struct {
@@ -241,11 +242,12 @@ type InsertSchedulerMasterTaskList struct {
 	Assign_To           string `json:"assign_to"`
 	Remainder_Date      string `json:"remainder_date"`
 	Creator             string `json:"creator"`
+	Task_Type           string `json:"task_type"`
 }
 
 //("" text, "" text, "" text, "" text, "" text, "" text, "" text, "" text, "" text, "" text, "" text)
 
-type ParamShowUserAssign_History struct {
+type ParamShowUserAssign_History struct { 
 	Param string `json:"param" gorm:"varchar(30);"`
 }
 

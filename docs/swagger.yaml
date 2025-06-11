@@ -1,4 +1,12 @@
+basePath: /api/v1
 definitions:
+  models.CategoryList:
+    properties:
+      code:
+        type: string
+      name:
+        type: string
+    type: object
   models.CreateCategoryParam:
     properties:
       category:
@@ -9,6 +17,13 @@ definitions:
     - category
     - name
     type: object
+  models.DeptList:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
   models.FileUpload:
     properties:
       fileName:
@@ -18,6 +33,23 @@ definitions:
     required:
     - fileName
     - filePath
+    type: object
+  models.GetCommentList:
+    properties:
+      Comment_Date:
+        type: string
+      Comment_ID:
+        type: string
+      Comments:
+        type: string
+      Content_Name:
+        type: string
+      Emp_ID:
+        type: string
+      Emp_NAME:
+        type: string
+      File_ID:
+        type: string
     type: object
   models.InsertComments:
     properties:
@@ -62,6 +94,8 @@ definitions:
         type: string
       task_name:
         type: string
+      task_type:
+        type: string
       topic_code:
         type: string
     type: object
@@ -100,12 +134,26 @@ definitions:
         type: string
       task_name:
         type: string
+      task_type:
+        type: string
       topic:
         type: string
     type: object
   models.ParamClickedNotif:
     properties:
       taskid:
+        type: string
+    type: object
+  models.ValueGetTaskID:
+    properties:
+      task_id:
+        type: string
+    type: object
+  models.ValueGettingUserid:
+    properties:
+      name:
+        type: string
+      number_officer:
         type: string
     type: object
   models.ValueUpdateingTask:
@@ -128,8 +176,19 @@ definitions:
       task_id:
         type: string
     type: object
+host: localhost:8086
 info:
-  contact: {}
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: A Tasklist management service API in Go using Gin framework.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Tasklist API
+  version: "1.0"
 paths:
   /Tasklist/CreateCategory:
     post:
@@ -172,10 +231,55 @@ paths:
       responses: {}
   /Tasklist/GetCategory:
     get:
-      responses: {}
+      consumes:
+      - application/json
+      description: Get list of categories based on parameter
+      parameters:
+      - description: Category parameter
+        in: query
+        name: param
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CategoryList'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get category list
+      tags:
+      - Tasklist
   /Tasklist/GetDepartemen:
     get:
-      responses: {}
+      consumes:
+      - application/json
+      description: Get all departments from the database
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.DeptList'
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get list of departments
+      tags:
+      - Tasklist
   /Tasklist/GetHeaderListData:
     get:
       responses: {}
@@ -184,25 +288,153 @@ paths:
       responses: {}
   /Tasklist/GetListData:
     get:
-      responses: {}
+      consumes:
+      - application/json
+      description: Get various types of list data based on parameter
+      parameters:
+      - description: Parameter type (GetDataHeaderTaskList/GetDataDetailTaskList/SetDataSummaryTaskList/GetDataAssignTo/GetDataAssignToALL/ValidateUserLevel)
+        in: query
+        name: param
+        required: true
+        type: string
+      - description: User ID
+        in: query
+        name: userid
+        type: string
+      - description: Task ID
+        in: query
+        name: task_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              data:
+                type: object
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get list data
+      tags:
+      - Tasklist
   /Tasklist/GetListUserAssignHistory:
     get:
       responses: {}
   /Tasklist/GetListtComments:
     get:
-      responses: {}
+      consumes:
+      - application/json
+      description: Get comments for a specific task
+      parameters:
+      - description: Task ID
+        in: query
+        name: task_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetCommentList'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get list of comments
+      tags:
+      - Tasklist
   /Tasklist/GetNotifTaskList:
     get:
       responses: {}
   /Tasklist/GetTaskID:
     get:
-      responses: {}
+      consumes:
+      - application/json
+      description: Get task ID information using comment ID
+      parameters:
+      - description: Comment ID
+        in: query
+        name: comment_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ValueGetTaskID'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get task ID by comment ID
+      tags:
+      - Tasklist
   /Tasklist/GetUserNotifTaskList:
     get:
       responses: {}
   /Tasklist/GetUserid:
     get:
-      responses: {}
+      consumes:
+      - application/json
+      description: Get user information by PIN
+      parameters:
+      - description: Parameter type (GetUserid/GetUserName)
+        in: query
+        name: param
+        required: true
+        type: string
+      - description: User PIN
+        in: query
+        name: pin
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ValueGettingUserid'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get user information
+      tags:
+      - Tasklist
   /Tasklist/InsertSchedulerMasterTask:
     post:
       parameters:
@@ -225,53 +457,46 @@ paths:
       responses: {}
   /Tasklist/InsertingComment:
     post:
+      consumes:
+      - application/json
+      description: Add a new comment to a task
       parameters:
-      - description: Inserting Comments
+      - description: Comment information
         in: body
-        name: file
+        name: comment
         required: true
         schema:
           $ref: '#/definitions/models.InsertComments'
-      responses: {}
-  /Tasklist/InsertingSubtask:
-    post:
-      parameters:
-      - description: Inserting Task Manual
-        in: body
-        name: file
-        required: true
-        schema:
-          $ref: '#/definitions/models.InsertingTaskManual'
+      produces:
+      - application/json
       responses:
         "200":
-          description: Successfully uploaded
+          description: OK
           schema:
-            additionalProperties:
-              type: string
+            additionalProperties: true
             type: object
         "400":
-          description: Invalid input
+          description: Bad Request
           schema:
-            additionalProperties:
-              type: string
+            additionalProperties: true
             type: object
         "500":
-          description: Internal server error
+          description: Internal Server Error
           schema:
-            additionalProperties:
-              type: string
+            additionalProperties: true
             type: object
-      summary: Inserting Subtask
+      summary: Insert a new comment
+      tags:
+      - Tasklist
   /Tasklist/InsertingTaskManual:
     post:
       consumes:
       - application/json
-      description: Upload a file to the specified bucket using the file path and file
-        name.
+      description: Create a new task with manual input
       parameters:
-      - description: Inserting Task Manual
+      - description: Task information
         in: body
-        name: file
+        name: task
         required: true
         schema:
           $ref: '#/definitions/models.InsertingTaskManual'
@@ -279,24 +504,23 @@ paths:
       - application/json
       responses:
         "200":
-          description: Successfully uploaded
+          description: OK
           schema:
-            additionalProperties:
-              type: string
+            additionalProperties: true
             type: object
         "400":
-          description: Invalid input
+          description: Bad Request
           schema:
-            additionalProperties:
-              type: string
+            additionalProperties: true
             type: object
         "500":
-          description: Internal server error
+          description: Internal Server Error
           schema:
-            additionalProperties:
-              type: string
+            additionalProperties: true
             type: object
-      summary: Inserting Task Manual
+      summary: Insert a new task manually
+      tags:
+      - Tasklist
   /Tasklist/SendingNotifDone:
     post:
       parameters:
@@ -340,12 +564,11 @@ paths:
     post:
       consumes:
       - application/json
-      description: Upload a file to the specified bucket using the file path and file
-        name.
+      description: Update the progress of a task
       parameters:
-      - description: Updating Progress Task Value
+      - description: Progress information
         in: body
-        name: file
+        name: progress
         required: true
         schema:
           $ref: '#/definitions/models.ValueUpdateingTask'
@@ -353,59 +576,55 @@ paths:
       - application/json
       responses:
         "200":
-          description: Successfully uploaded
+          description: OK
           schema:
-            additionalProperties:
-              type: string
+            additionalProperties: true
             type: object
         "400":
-          description: Invalid input
+          description: Bad Request
           schema:
-            additionalProperties:
-              type: string
+            additionalProperties: true
             type: object
         "500":
-          description: Internal server error
+          description: Internal Server Error
           schema:
-            additionalProperties:
-              type: string
+            additionalProperties: true
             type: object
-      summary: Inserting Task Manual
+      summary: Update task progress
+      tags:
+      - Tasklist
   /Tasklist/UploadFile:
     post:
       consumes:
-      - application/json
-      description: Upload a file to the specified bucket using the file path and file
-        name.
+      - multipart/form-data
+      description: Upload a file to the server
       parameters:
-      - description: File Upload Info
-        in: body
+      - description: File to upload
+        in: formData
         name: file
         required: true
-        schema:
-          $ref: '#/definitions/models.FileUpload'
+        type: file
       produces:
       - application/json
       responses:
         "200":
-          description: Successfully uploaded
+          description: OK
           schema:
-            additionalProperties:
-              type: string
+            additionalProperties: true
             type: object
         "400":
-          description: Invalid input
+          description: Bad Request
           schema:
-            additionalProperties:
-              type: string
+            additionalProperties: true
             type: object
         "500":
-          description: Internal server error
+          description: Internal Server Error
           schema:
-            additionalProperties:
-              type: string
+            additionalProperties: true
             type: object
       summary: Upload a file
+      tags:
+      - Tasklist
   /Tasklist/UploadingToMongoDB:
     post:
       consumes:
@@ -471,4 +690,10 @@ paths:
               type: string
             type: object
       summary: Upload a file
+securityDefinitions:
+  Bearer:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"
