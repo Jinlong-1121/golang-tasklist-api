@@ -457,46 +457,53 @@ paths:
       responses: {}
   /Tasklist/InsertingComment:
     post:
-      consumes:
-      - application/json
-      description: Add a new comment to a task
       parameters:
-      - description: Comment information
+      - description: Inserting Comments
         in: body
-        name: comment
+        name: file
         required: true
         schema:
           $ref: '#/definitions/models.InsertComments'
-      produces:
-      - application/json
+      responses: {}
+  /Tasklist/InsertingSubtask:
+    post:
+      parameters:
+      - description: Inserting Task Manual
+        in: body
+        name: file
+        required: true
+        schema:
+          $ref: '#/definitions/models.InsertingTaskManual'
       responses:
         "200":
-          description: OK
+          description: Successfully uploaded
           schema:
-            additionalProperties: true
+            additionalProperties:
+              type: string
             type: object
         "400":
-          description: Bad Request
+          description: Invalid input
           schema:
-            additionalProperties: true
+            additionalProperties:
+              type: string
             type: object
         "500":
-          description: Internal Server Error
+          description: Internal server error
           schema:
-            additionalProperties: true
+            additionalProperties:
+              type: string
             type: object
-      summary: Insert a new comment
-      tags:
-      - Tasklist
+      summary: Inserting Subtask
   /Tasklist/InsertingTaskManual:
     post:
       consumes:
       - application/json
-      description: Create a new task with manual input
+      description: Upload a file to the specified bucket using the file path and file
+        name.
       parameters:
-      - description: Task information
+      - description: Inserting Task Manual
         in: body
-        name: task
+        name: file
         required: true
         schema:
           $ref: '#/definitions/models.InsertingTaskManual'
@@ -504,23 +511,24 @@ paths:
       - application/json
       responses:
         "200":
-          description: OK
+          description: Successfully uploaded
           schema:
-            additionalProperties: true
+            additionalProperties:
+              type: string
             type: object
         "400":
-          description: Bad Request
+          description: Invalid input
           schema:
-            additionalProperties: true
+            additionalProperties:
+              type: string
             type: object
         "500":
-          description: Internal Server Error
+          description: Internal server error
           schema:
-            additionalProperties: true
+            additionalProperties:
+              type: string
             type: object
-      summary: Insert a new task manually
-      tags:
-      - Tasklist
+      summary: Inserting Task Manual
   /Tasklist/SendingNotifDone:
     post:
       parameters:
@@ -564,11 +572,12 @@ paths:
     post:
       consumes:
       - application/json
-      description: Update the progress of a task
+      description: Upload a file to the specified bucket using the file path and file
+        name.
       parameters:
-      - description: Progress information
+      - description: Updating Progress Task Value
         in: body
-        name: progress
+        name: file
         required: true
         schema:
           $ref: '#/definitions/models.ValueUpdateingTask'
@@ -576,55 +585,59 @@ paths:
       - application/json
       responses:
         "200":
-          description: OK
+          description: Successfully uploaded
           schema:
-            additionalProperties: true
+            additionalProperties:
+              type: string
             type: object
         "400":
-          description: Bad Request
+          description: Invalid input
           schema:
-            additionalProperties: true
+            additionalProperties:
+              type: string
             type: object
         "500":
-          description: Internal Server Error
+          description: Internal server error
           schema:
-            additionalProperties: true
+            additionalProperties:
+              type: string
             type: object
-      summary: Update task progress
-      tags:
-      - Tasklist
+      summary: Inserting Task Manual
   /Tasklist/UploadFile:
     post:
       consumes:
-      - multipart/form-data
-      description: Upload a file to the server
+      - application/json
+      description: Upload a file to the specified bucket using the file path and file
+        name.
       parameters:
-      - description: File to upload
-        in: formData
+      - description: File Upload Info
+        in: body
         name: file
         required: true
-        type: file
+        schema:
+          $ref: '#/definitions/models.FileUpload'
       produces:
       - application/json
       responses:
         "200":
-          description: OK
+          description: Successfully uploaded
           schema:
-            additionalProperties: true
+            additionalProperties:
+              type: string
             type: object
         "400":
-          description: Bad Request
+          description: Invalid input
           schema:
-            additionalProperties: true
+            additionalProperties:
+              type: string
             type: object
         "500":
-          description: Internal Server Error
+          description: Internal server error
           schema:
-            additionalProperties: true
+            additionalProperties:
+              type: string
             type: object
       summary: Upload a file
-      tags:
-      - Tasklist
   /Tasklist/UploadingToMongoDB:
     post:
       consumes:

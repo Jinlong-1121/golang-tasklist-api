@@ -428,21 +428,10 @@ const docTemplate = `{
         },
         "/Tasklist/InsertingComment": {
             "post": {
-                "description": "Add a new comment to a task",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Tasklist"
-                ],
-                "summary": "Insert a new comment",
                 "parameters": [
                     {
-                        "description": "Comment information",
-                        "name": "comment",
+                        "description": "Inserting Comments",
+                        "name": "file",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -450,48 +439,16 @@ const docTemplate = `{
                         }
                     }
                 ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    }
-                }
+                "responses": {}
             }
         },
-        "/Tasklist/InsertingTaskManual": {
+        "/Tasklist/InsertingSubtask": {
             "post": {
-                "description": "Create a new task with manual input",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Tasklist"
-                ],
-                "summary": "Insert a new task manually",
+                "summary": "Inserting Subtask",
                 "parameters": [
                     {
-                        "description": "Task information",
-                        "name": "task",
+                        "description": "Inserting Task Manual",
+                        "name": "file",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -501,24 +458,82 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Successfully uploaded",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": true
+                            "additionalProperties": {
+                                "type": "string"
+                            }
                         }
                     },
                     "400": {
-                        "description": "Bad Request",
+                        "description": "Invalid input",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": true
+                            "additionalProperties": {
+                                "type": "string"
+                            }
                         }
                     },
                     "500": {
-                        "description": "Internal Server Error",
+                        "description": "Internal server error",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": true
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/Tasklist/InsertingTaskManual": {
+            "post": {
+                "description": "Upload a file to the specified bucket using the file path and file name.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Inserting Task Manual",
+                "parameters": [
+                    {
+                        "description": "Inserting Task Manual",
+                        "name": "file",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.InsertingTaskManual"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully uploaded",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
                         }
                     }
                 }
@@ -587,21 +602,18 @@ const docTemplate = `{
         },
         "/Tasklist/UpdatingProgressTask": {
             "post": {
-                "description": "Update the progress of a task",
+                "description": "Upload a file to the specified bucket using the file path and file name.",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
-                    "Tasklist"
-                ],
-                "summary": "Update task progress",
+                "summary": "Inserting Task Manual",
                 "parameters": [
                     {
-                        "description": "Progress information",
-                        "name": "progress",
+                        "description": "Updating Progress Task Value",
+                        "name": "file",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -611,24 +623,30 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Successfully uploaded",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": true
+                            "additionalProperties": {
+                                "type": "string"
+                            }
                         }
                     },
                     "400": {
-                        "description": "Bad Request",
+                        "description": "Invalid input",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": true
+                            "additionalProperties": {
+                                "type": "string"
+                            }
                         }
                     },
                     "500": {
-                        "description": "Internal Server Error",
+                        "description": "Internal server error",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": true
+                            "additionalProperties": {
+                                "type": "string"
+                            }
                         }
                     }
                 }
@@ -636,46 +654,51 @@ const docTemplate = `{
         },
         "/Tasklist/UploadFile": {
             "post": {
-                "description": "Upload a file to the server",
+                "description": "Upload a file to the specified bucket using the file path and file name.",
                 "consumes": [
-                    "multipart/form-data"
+                    "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
-                    "Tasklist"
-                ],
                 "summary": "Upload a file",
                 "parameters": [
                     {
-                        "type": "file",
-                        "description": "File to upload",
+                        "description": "File Upload Info",
                         "name": "file",
-                        "in": "formData",
-                        "required": true
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.FileUpload"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Successfully uploaded",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": true
+                            "additionalProperties": {
+                                "type": "string"
+                            }
                         }
                     },
                     "400": {
-                        "description": "Bad Request",
+                        "description": "Invalid input",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": true
+                            "additionalProperties": {
+                                "type": "string"
+                            }
                         }
                     },
                     "500": {
-                        "description": "Internal Server Error",
+                        "description": "Internal server error",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": true
+                            "additionalProperties": {
+                                "type": "string"
+                            }
                         }
                     }
                 }

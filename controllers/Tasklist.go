@@ -401,16 +401,7 @@ func readPdf(path string) (string, error) {
 	return buf.String(), nil
 }
 
-// InsertingComment godoc
-// @Summary Insert a new comment
-// @Description Add a new comment to a task
-// @Tags Tasklist
-// @Accept json
-// @Produce json
-// @Param comment body models.InsertComments true "Comment information"
-// @Success 200 {object} map[string]interface{}
-// @Failure 400 {object} map[string]interface{}
-// @Failure 500 {object} map[string]interface{}
+// @Param file body models.InsertComments true "Inserting Comments"
 // @Router /Tasklist/InsertingComment [post]
 func (repository *InitRepo) InsertingComment(c *gin.Context) {
 	var AddingValue models.InsertComments
@@ -602,18 +593,13 @@ func (repository *InitRepo) SendingNotifDone(c *gin.Context) {
 
 }
 
-// InsertingTaskManual godoc
-// @Summary Insert a new task manually
-// @Description Create a new task with manual input
-// @Tags Tasklist
-// @Accept json
-// @Produce json
-// @Param task body models.InsertingTaskManual true "Task information"
-// @Success 200 {object} map[string]interface{}
-// @Failure 400 {object} map[string]interface{}
-// @Failure 500 {object} map[string]interface{}
-// @Router /Tasklist/InsertingTaskManual [post]
-func (repository *InitRepo) InsertingTaskManual(c *gin.Context) {
+// @Summary Inserting Subtask
+// @Param file body models.InsertingTaskManual true "Inserting Task Manual"
+// @Success 200 {object} map[string]string "Successfully uploaded"
+// @Failure 400 {object} map[string]string "Invalid input"
+// @Failure 500 {object} map[string]string "Internal server error"
+// @Router /Tasklist/InsertingSubtask [post]
+func (repository *InitRepo) InsertingSubtask(c *gin.Context) {
 
 	var AddingValue models.InsertingTaskManual
 	var Userassignto []models.FetchUsernameAssign
@@ -639,7 +625,7 @@ func (repository *InitRepo) InsertingTaskManual(c *gin.Context) {
 		}
 		remainderDate := enddate.AddDate(0, 0, -remainderDays)
 		remainder_date = remainderDate.Format("2006-01-02")
-		helper.MasterQuery = models.Query_InsertTaskManual + "('" + AddingValue.Departemen + "', '" + AddingValue.Topic + "', '" + AddingValue.Assign_To + "', '" + AddingValue.Priority + "','" + AddingValue.Subject + "', '" + AddingValue.Task_Name + "', '" + AddingValue.Start_Date + "', '" + AddingValue.End_Date + "', '" + AddingValue.Addwho + "','" + remainder_date + "' , '"+ AddingValue.Task_type +"')"
+		helper.MasterQuery = models.Query_InsertSubtask + "('" + AddingValue.Departemen + "', '" + AddingValue.Topic + "', '" + AddingValue.Assign_To + "', '" + AddingValue.Priority + "','" + AddingValue.Subject + "', '" + AddingValue.Task_Name + "', '" + AddingValue.Start_Date + "', '" + AddingValue.End_Date + "', '" + AddingValue.Addwho + "','" + remainder_date + "','" + AddingValue.Task_id_parent_of + "', '"+ AddingValue.Task_type +"')"
 		errs := helper.MasterExec_Get(repository.DbPg, &AddingValue)
 		if errs != nil {
 			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs})
@@ -689,7 +675,7 @@ func (repository *InitRepo) InsertingTaskManual(c *gin.Context) {
 
 		remainderDate := enddate.AddDate(0, 0, -remainderDays)
 		remainder_date = remainderDate.Format("2006-01-02")
-		helper.MasterQuery = models.Query_InsertTaskManual + "('" + AddingValue.Departemen + "', '" + AddingValue.Topic + "', '" + AddingValue.Assign_To + "', '" + AddingValue.Priority + "','" + AddingValue.Subject + "', '" + AddingValue.Task_Name + "', '" + AddingValue.Start_Date + "', '" + AddingValue.End_Date + "', '" + AddingValue.Addwho + "','" + remainder_date + "')"
+		helper.MasterQuery = models.Query_InsertSubtask + "('" + AddingValue.Departemen + "', '" + AddingValue.Topic + "', '" + AddingValue.Assign_To + "', '" + AddingValue.Priority + "','" + AddingValue.Subject + "', '" + AddingValue.Task_Name + "', '" + AddingValue.Start_Date + "', '" + AddingValue.End_Date + "', '" + AddingValue.Addwho + "','" + remainder_date + "','" + AddingValue.Task_id_parent_of + "', '"+ AddingValue.Task_type +"')"
 		errs := helper.MasterExec_Get(repository.DbPg, &AddingValue)
 		if errs != nil {
 			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs})
@@ -776,16 +762,187 @@ func (repository *InitRepo) InsertingTaskManual(c *gin.Context) {
 	}
 }
 
-// UploadingFile godoc
-// @Summary Upload a file
-// @Description Upload a file to the server
-// @Tags Tasklist
-// @Accept multipart/form-data
+// @Summary Inserting Task Manual
+// @Description Upload a file to the specified bucket using the file path and file name.
+// @Accept json
 // @Produce json
-// @Param file formData file true "File to upload"
-// @Success 200 {object} map[string]interface{}
-// @Failure 400 {object} map[string]interface{}
-// @Failure 500 {object} map[string]interface{}
+// @Param file body models.InsertingTaskManual true "Inserting Task Manual"
+// @Success 200 {object} map[string]string "Successfully uploaded"
+// @Failure 400 {object} map[string]string "Invalid input"
+// @Failure 500 {object} map[string]string "Internal server error"
+// @Router /Tasklist/InsertingTaskManual [post]
+func (repository *InitRepo) InsertingTaskManual(c *gin.Context) {
+
+	var AddingValue models.InsertingTaskManual
+	var Userassignto []models.FetchUsernameAssign
+	var UserReporter []models.FetchUsernameReporter
+	var Taskidftch []models.FetchTaskID
+	var Mailto []models.Mailto
+	if err := c.ShouldBindJSON(&AddingValue); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": ""})
+		return
+	}
+
+	if strings.Contains(AddingValue.Assign_To, "GROUP") {
+		var remainder_date string
+		enddate, err := time.Parse("2006-01-02", AddingValue.End_Date)
+		if err != nil {
+			fmt.Println("Error parsing date:", err)
+			return
+		}
+		remainderDays, err := strconv.Atoi(AddingValue.Remainder_Date)
+		if err != nil {
+			fmt.Println("Error converting Remainder_Date to integer:", err)
+			return
+		}
+		remainderDate := enddate.AddDate(0, 0, -remainderDays)
+		remainder_date = remainderDate.Format("2006-01-02")
+		helper.MasterQuery = models.Query_InsertTaskManual + "('" + AddingValue.Departemen + "', '" + AddingValue.Topic + "', '" + AddingValue.Assign_To + "', '" + AddingValue.Priority + "','" + AddingValue.Subject + "', '" + AddingValue.Task_Name + "', '" + AddingValue.Start_Date + "', '" + AddingValue.End_Date + "', '" + AddingValue.Addwho + "','" + remainder_date + "' , '"+ AddingValue.Task_type +"')"
+		errs := helper.MasterExec_Get(repository.DbPg, &AddingValue)
+		if errs != nil {
+			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs})
+			return
+		}
+
+	} else {
+		var remainder_date string
+		enddate, err := time.Parse("2006-01-02", AddingValue.End_Date)
+		if err != nil {
+			fmt.Println("Error parsing date:", err)
+			return
+		}
+		remainderDays, err := strconv.Atoi(AddingValue.Remainder_Date)
+		if err != nil {
+			fmt.Println("Error converting Remainder_Date to integer:", err)
+			return
+		}
+		var username = ""
+		helper.MasterQuery = `select "emp_no","emp_name" from public."dynamic_group" where "emp_no" =` + " '" + AddingValue.Assign_To + "' "
+		errs_1 := helper.MasterExec_Get(repository.DbPg, &Userassignto)
+		if errs_1 != nil {
+			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs_1})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"code":  200,
+			"error": false,
+			"data":  Userassignto,
+		})
+		username = Userassignto[0].Emp_Name
+
+		var username_reporter = ""
+		helper.MasterQuery = `select "emp_no","emp_name" from public."dynamic_group" where "emp_no" =` + " '" + AddingValue.Addwho + "' "
+		errs_2 := helper.MasterExec_Get(repository.DbPg, &UserReporter)
+		if errs_2 != nil {
+			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs_2})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"code":  200,
+			"error": false,
+			"data":  UserReporter,
+		})
+		username_reporter = UserReporter[0].Emp_Name
+		var CurentDate = time.Now().Format("2006-01-02:15:04")
+
+		remainderDate := enddate.AddDate(0, 0, -remainderDays)
+		remainder_date = remainderDate.Format("2006-01-02")
+		helper.MasterQuery = models.Query_InsertTaskManual + "('" + AddingValue.Departemen + "', '" + AddingValue.Topic + "', '" + AddingValue.Assign_To + "', '" + AddingValue.Priority + "','" + AddingValue.Subject + "', '" + AddingValue.Task_Name + "', '" + AddingValue.Start_Date + "', '" + AddingValue.End_Date + "', '" + AddingValue.Addwho + "','" + remainder_date + "', '"+ AddingValue.Task_type +"')"
+		errs := helper.MasterExec_Get(repository.DbPg, &AddingValue)
+		if errs != nil {
+			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs})
+			return
+		}
+
+		var Taskid = ""
+		helper.MasterQuery = `select "task_id" from public."task_header" where "reporter" = ` + "'" + AddingValue.Addwho + "'" + ` order by "task_id" desc limit 1`
+		errs_3 := helper.MasterExec_Get(repository.DbPg, &Taskidftch)
+		if errs_3 != nil {
+			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs_3})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"code":  200,
+			"error": false,
+			"data":  Taskidftch,
+		})
+		Taskid = Taskidftch[0].Task_ID
+
+		var SendMailto = ""
+		helper.MasterQuery = `Select Email from users where number_officer =` + "'" + AddingValue.Assign_To + "' "
+		errs_4 := helper.MasterExec_Get(repository.DbMy, &Mailto)
+		if errs_4 != nil {
+			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs_4})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"code":  200,
+			"error": false,
+			"data":  Mailto,
+		})
+		SendMailto = Mailto[0].Email
+
+		var clickdbtn = "<a style='background-color: rgb(255, 198, 39); color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 8px;' href='http://192.168.4.250/sipam/#/tasklist?Taskid=" + Taskid + "'>Show Your Task Here</a>"
+
+		emailData := map[string]interface{}{
+			"email_from":     "SiPAM Notifications (No-Reply)",
+			"email_to":       SendMailto,                    // Jika lebih satu email kasih tnada koma (,)
+			"email_cc":       "",                            // Jika lebih satu email kasih tnada koma (,)
+			"email_template": "Notifications_New_Task.html", // Sesuai dengan nama file HTML
+			"email_subject":  "Notification",                // Subject Email bebas
+			"email_body":     "",
+			"param1":         username,
+			"param2":         CurentDate,
+			"param3":         AddingValue.Subject,
+			"param4":         AddingValue.Remainder_Date,
+			"param5":         username_reporter,
+			"param6":         clickdbtn,
+			"param7":         "",
+			"param8":         "",
+			"param9":         "",
+			"param10":        "",
+			"email_category": "Notification", // Email Catefory bebas
+		}
+		jsonData, err := json.Marshal(emailData)
+		if err != nil {
+			c.PureJSON(http.StatusInternalServerError, gin.H{
+				"code":  500,
+				"error": true,
+				"data":  "Failed to marshal email data",
+			})
+			return
+		}
+		apiURL := "http://192.168.10.203:6069/api/v1/create_email_sender"
+		response, err := http.Post(apiURL, "application/json", bytes.NewBuffer(jsonData))
+		if err != nil {
+			c.PureJSON(http.StatusInternalServerError, gin.H{
+				"code":  500,
+				"error": true,
+				"data":  err.Error(),
+			})
+			return
+		}
+		defer response.Body.Close()
+
+		// Respond with success
+		c.PureJSON(http.StatusOK, gin.H{
+			"code":  200,
+			"error": false,
+			"data":  "Emails sent successfully",
+		})
+		c.JSON(http.StatusOK, gin.H{"message": "Successfully uploaded"})
+	}
+
+}
+
+// @Summary Upload a file
+// @Description Upload a file to the specified bucket using the file path and file name.
+// @Accept json
+// @Produce json
+// @Param file body models.FileUpload.FilePath true "File Upload Info"
+// @Success 200 {object} map[string]string "Successfully uploaded"
+// @Failure 400 {object} map[string]string "Invalid input"
+// @Failure 500 {object} map[string]string "Internal server error"
 // @Router /Tasklist/UploadFile [post]
 func (repository *InitRepo) UploadingFile(c *gin.Context) {
 	bucketName := helper.GodotEnv("BucketName")
@@ -937,16 +1094,14 @@ func (repository *InitRepo) DownloadingToMongoDB(c *gin.Context) {
 
 }
 
-// UpdatingProgressTask godoc
-// @Summary Update task progress
-// @Description Update the progress of a task
-// @Tags Tasklist
+// @Summary Inserting Task Manual
+// @Description Upload a file to the specified bucket using the file path and file name.
 // @Accept json
 // @Produce json
-// @Param progress body models.ValueUpdateingTask true "Progress information"
-// @Success 200 {object} map[string]interface{}
-// @Failure 400 {object} map[string]interface{}
-// @Failure 500 {object} map[string]interface{}
+// @Param file body models.ValueUpdateingTask true "Updating Progress Task Value"
+// @Success 200 {object} map[string]string "Successfully uploaded"
+// @Failure 400 {object} map[string]string "Invalid input"
+// @Failure 500 {object} map[string]string "Internal server error"
 // @Router /Tasklist/UpdatingProgressTask [post]
 func (repository *InitRepo) UpdatingProgressTask(c *gin.Context) {
 
@@ -1221,7 +1376,7 @@ func (repository *InitRepo) InsertingSchedulerMasterTask(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": ""})
 		return
 	}
-	helper.MasterQuery = models.Query_InsertSchedulerMasterTaskList + "('" + Parameter.Topic_Code + "', '" + Parameter.Subject + "', '" + Parameter.Dept + "', '" + Parameter.Task_Name + "', '" + Parameter.Task_category + "', '" + Parameter.Generate_Every + "', '" + Parameter.Priority + "', '" + Parameter.Estimated_Time_Done + "', '" + Parameter.Assign_To + "', '" + Parameter.Remainder_Date + "','" + Parameter.Creator + "','" + Parameter.Task_type + "')"
+	helper.MasterQuery = models.Query_InsertSchedulerMasterTaskList + "('" + Parameter.Topic_Code + "', '" + Parameter.Subject + "', '" + Parameter.Dept + "', '" + Parameter.Task_Name + "', '" + Parameter.Task_category + "', '" + Parameter.Generate_Every + "', '" + Parameter.Priority + "', '" + Parameter.Estimated_Time_Done + "', '" + Parameter.Assign_To + "', '" + Parameter.Remainder_Date + "','" + Parameter.Creator + "','" + Parameter.Task_Type + "')"
 	errs := helper.MasterExec_Get(repository.DbPg, "")
 	if errs != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs})
