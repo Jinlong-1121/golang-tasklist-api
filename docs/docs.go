@@ -472,6 +472,22 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/Tasklist/InsertingDocumentUpload": {
+            "post": {
+                "parameters": [
+                    {
+                        "description": "Inserting Document Upload",
+                        "name": "file",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.InsertDocument"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/Tasklist/InsertingSubtask": {
             "post": {
                 "summary": "Inserting Subtask",
@@ -978,6 +994,35 @@ const docTemplate = `{
                     }
                 },
                 "Task_ID": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.InsertDocument": {
+            "type": "object",
+            "required": [
+                "CreatedDate",
+                "DocumentType",
+                "Status",
+                "TaskID"
+            ],
+            "properties": {
+                "CreatedDate": {
+                    "type": "string"
+                },
+                "DocumentName": {
+                    "type": "string"
+                },
+                "DocumentType": {
+                    "type": "string"
+                },
+                "FilePath": {
+                    "type": "string"
+                },
+                "Status": {
+                    "type": "string"
+                },
+                "TaskID": {
                     "type": "string"
                 }
             }

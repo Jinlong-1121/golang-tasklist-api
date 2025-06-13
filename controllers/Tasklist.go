@@ -191,6 +191,7 @@ func (repository *InitRepo) ValidateDocType(c *gin.Context) {
 		"data":  results,
 	})
 }
+
 // GetListtComments godoc
 // @Summary Get list of comments
 // @Description Get comments for a specific task
@@ -502,6 +503,63 @@ func (repository *InitRepo) InsertingComment(c *gin.Context) {
 			}
 
 		}
+	}
+
+}
+
+// @Param file body models.InsertDocument true "Inserting Document Upload"
+// @Router /Tasklist/InsertingDocumentUpload [post]
+func (repository *InitRepo) InsertingDocumentUpload(c *gin.Context) {
+	var AddingValue models.InsertDocument
+	var Try []models.CategoryList
+	if err := c.ShouldBindJSON(&AddingValue); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": ""})
+		return
+	}
+	if AddingValue.DocumentType == "TESTING" {
+		content, err := readPdf(AddingValue.FilePath) // Read local pdf file
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(content)
+		c.JSON(http.StatusOK, gin.H{"message": "Successfully uploaded", "Content": content})
+	} else {
+
+		if AddingValue.FilePath == "" || len(AddingValue.FilePath) < 1 {
+			AddingValue.FilePath = ""
+			helper.MasterQuery = models.Query_InsertingDocumentUpload + "('" + AddingValue.DocumentType + "'," + AddingValue.CreatedDate + ",'" + AddingValue.Status + "','" + AddingValue.TaskID + "','" + AddingValue.DocumentName + "',''," + AddingValue.CreatedDate + ")"
+			errs := helper.MasterExec_Get(repository.DbPg, &Try)
+			if errs != nil {
+				c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs})
+				return
+			}
+			c.JSON(http.StatusOK, gin.H{"message": "Successfully uploaded"})
+
+		} else {
+			ObjID, err := helper.InsertPDFToMongoDB(AddingValue.FilePath)
+			if err != nil {
+				log.Printf("Failed to insert PDF into MongoDB: %v", err)
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to upload the PDF"})
+				return
+			}
+			ObjectID := ObjID
+			content, err := readPdf(AddingValue.FilePath) // Read local pdf file
+			if err != nil {
+				log.Printf("Failed to insert PDF into MongoDB: %v", err)
+			}
+			fmt.Println(content)
+			c.JSON(http.StatusOK, gin.H{"message": "Successfully uploaded"})
+			fmt.Println("PDF successfully inserted into MongoDB.")
+			helper.MasterQuery = ""
+			helper.MasterQuery = models.Query_InsertingDocumentUpload + "('" + AddingValue.DocumentType + "'," + AddingValue.CreatedDate + ",'" + AddingValue.Status + "','" + AddingValue.TaskID + "','" + AddingValue.DocumentName + "','" + ObjectID.Hex() + "'," + AddingValue.CreatedDate + ")"
+			errs := helper.MasterExec_Get(repository.DbPg, &Try)
+			if errs != nil {
+				c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs})
+				return
+			}
+			c.JSON(http.StatusOK, gin.H{"message": "Successfully uploaded"})
+		}
+
 	}
 
 }

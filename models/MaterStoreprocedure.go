@@ -13,6 +13,7 @@ const (
 	Query_InsertingNotif                = `Call public."SP_InsertNotif"`
 	Query_InsertSchedulerMasterTaskList = `Call public."Sp_InsertingSchedulerTask"`
 	Query_GetTaskCategory               = `SELECT name FROM public."task_category"`
+	Query_InsertingDocumentUpload       = `SELECT public."insert_task_document_upload"`
 )
 
 //("topic_code" text, "subject" text, "dept" text, "task_code" text, "task_name" text, "task_category" text, "generate_every" text, "priority" text, "estimasted_time_done" text, "assign_to" text, "created_date" text)

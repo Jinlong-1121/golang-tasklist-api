@@ -44,3 +44,12 @@ var TableReturnedComments = `AS t("Comment_ID" varchar,"Emp_ID" varchar,"Emp_NAM
 func GenerateValue_Comments(Param string) {
 	QueryGetListComments = "Select * from public.Get_List_Comments('" + Param + "')" + TableReturnedComments
 }
+
+type InsertDocument struct {
+	DocumentType string `json:"DocumentType" binding:"required"`
+	CreatedDate  string `json:"CreatedDate" binding:"required"`
+	Status       string `json:"Status" binding:"required"`
+	TaskID       string `json:"TaskID" binding:"required"`
+	DocumentName string `json:"DocumentName"`
+	FilePath     string `json:"FilePath"`
+}

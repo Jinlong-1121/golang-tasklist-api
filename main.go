@@ -99,6 +99,7 @@ func setupRouter() *gin.Engine {
 			Tasklist.GET("/GetListData", initrepo.GetListData)
 			Tasklist.GET("/ValidateDocType", initrepo.ValidateDocType)
 			Tasklist.POST("/UploadFile", initrepo.UploadingFile)
+			Tasklist.POST("/InsertingDocumentUpload", initrepo.InsertingDocumentUpload)
 			Tasklist.POST("/InsertingComment", initrepo.InsertingComment)
 			Tasklist.POST("/InsertingTaskManual", initrepo.InsertingTaskManual)
 			Tasklist.POST("/UploadingToMongoDB", initrepo.UploadingToMongoDB)

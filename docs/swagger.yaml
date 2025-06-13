@@ -72,6 +72,26 @@ definitions:
     - Emp_ID
     - Task_ID
     type: object
+  models.InsertDocument:
+    properties:
+      CreatedDate:
+        type: string
+      DocumentName:
+        type: string
+      DocumentType:
+        type: string
+      FilePath:
+        type: string
+      Status:
+        type: string
+      TaskID:
+        type: string
+    required:
+    - CreatedDate
+    - DocumentType
+    - Status
+    - TaskID
+    type: object
   models.InsertSchedulerMasterTaskList:
     properties:
       assign_to:
@@ -489,6 +509,16 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/models.InsertComments'
+      responses: {}
+  /Tasklist/InsertingDocumentUpload:
+    post:
+      parameters:
+      - description: Inserting Document Upload
+        in: body
+        name: file
+        required: true
+        schema:
+          $ref: '#/definitions/models.InsertDocument'
       responses: {}
   /Tasklist/InsertingSubtask:
     post:
