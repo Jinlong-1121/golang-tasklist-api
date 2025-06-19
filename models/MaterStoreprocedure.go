@@ -15,7 +15,11 @@ const (
 	Query_GetTaskCategory               = `SELECT name FROM public."task_category"`
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 	Query_InsertingDocumentUpload       = `SELECT * FROM public."insert_task_document_upload"`
+=======
+	Query_InsertingDocumentUpload       = `SELECT * from public."insert_task_document_upload"`
+>>>>>>> Stashed changes
 =======
 	Query_InsertingDocumentUpload       = `SELECT * from public."insert_task_document_upload"`
 >>>>>>> Stashed changes
