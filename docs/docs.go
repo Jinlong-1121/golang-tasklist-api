@@ -870,6 +870,13 @@ const docTemplate = `{
                         "name": "param",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Parameter",
+                        "name": "parameter",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {

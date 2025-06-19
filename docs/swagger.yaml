@@ -769,6 +769,11 @@ paths:
         name: param
         required: true
         type: string
+      - description: Parameter
+        in: query
+        name: parameter
+        required: true
+        type: string
       produces:
       - application/json
       responses:

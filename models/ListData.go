@@ -163,7 +163,8 @@ type ValueGettingUserid struct {
 	Name           string `json:"name" gorm:"varchar(100);"`
 }
 type ValueValidateDocType struct {
-	Param string `json:"param" gorm:"varchar(30);"`
+	Param     string `form:"param" json:"param" gorm:"varchar(30);"`
+	Parameter string `form:"parameter" json:"parameter" gorm:"varchar(50);"`
 }
 type FetchUsernameAssign struct {
 	Emp_No   string `json:"emp_no" gorm:"varchar(30);"`
@@ -250,7 +251,7 @@ type InsertSchedulerMasterTaskList struct {
 
 //("" text, "" text, "" text, "" text, "" text, "" text, "" text, "" text, "" text, "" text, "" text)
 
-type ParamShowUserAssign_History struct { 
+type ParamShowUserAssign_History struct {
 	Param string `json:"param" gorm:"varchar(30);"`
 }
 

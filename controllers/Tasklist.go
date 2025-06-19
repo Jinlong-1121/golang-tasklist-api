@@ -159,6 +159,7 @@ func (repository *InitRepo) GetUserid(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param param query string true "Task ID"
+// @Param parameter query string true "Parameter"
 // @Success 200 {object} object{data=object}
 // @Router /Tasklist/ValidateDocType [get]
 func (repository *InitRepo) ValidateDocType(c *gin.Context) {
@@ -168,28 +169,63 @@ func (repository *InitRepo) ValidateDocType(c *gin.Context) {
 		return
 	}
 
-	// Define a struct to hold the query result
-	type DocTypeResult struct {
+	// // Validate parameter values
+	// if Parameter.Parameter != "GET_DROPDOWN" || Parameter.Parameter != "GET_TABLE_DATA" {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "parameter must be either GET_DROPDOWN or GET_TABLE_DATA"})
+	// 	return
+	// }
+
+	// Define structs at a higher scope
+	type DocTypeDropdownResult struct {
 		Type     string `json:"type" gorm:"varchar(100);"`
 		Name     string `json:"name" gorm:"varchar(100);"`
 		TaskType string `json:"task_type" gorm:"varchar(100);"`
 	}
 
-	var results []DocTypeResult
+	type DocTypeTableResult struct {
+		Document_Id    string `json:"document_id" gorm:"varchar(100);"`
+		Document_Type  string `json:"document_type" gorm:"varchar(100);"`
+		Created_Date   string `json:"created_date" gorm:"varchar(100);"`
+		Status         string `json:"status" gorm:"varchar(100);"`
+		Task_Id        string `json:"task_id" gorm:"varchar(100);"`
+		Document_Name  string `json:"document_name" gorm:"varchar(100);"`
+		File_Object_Id string `json:"file_object_id" gorm:"varchar(100);"`
+	}
 
-	// Use parameterized query to prevent SQL injection
-	helper.MasterQuery = "SELECT * FROM validate_doc_type('" + Parameter.Param + "') AS t(Type VARCHAR, name VARCHAR, task_type VARCHAR)"
-	errs := helper.MasterExec_Get(repository.DbPg, &results)
-	if errs != nil {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs.Error()})
+	if Parameter.Parameter == "GET_DROPDOWN" {
+		var results []DocTypeDropdownResult
+		helper.MasterQuery = "SELECT * FROM public.validate_doc_type('" + Parameter.Param + "','" + Parameter.Parameter + "') AS t(Type VARCHAR, name VARCHAR, task_type VARCHAR)"
+		errs := helper.MasterExec_Get(repository.DbPg, &results)
+		if errs != nil {
+			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs.Error() + Parameter.Param + "&" + Parameter.Parameter})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"code":  200,
+			"error": false,
+			"data":  results,
+		})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"code":  200,
-		"error": false,
-		"data":  results,
-	})
+	if Parameter.Parameter == "GET_TABLE_DATA" {
+		var results []DocTypeTableResult
+		helper.MasterQuery = "SELECT * FROM public.validate_doc_type('" + Parameter.Param + "','" + Parameter.Parameter + "') AS t(Document_Id VARCHAR, Document_Type VARCHAR, Created_Date VARCHAR, Status VARCHAR, Task_Id VARCHAR, Document_Name VARCHAR, File_Object_Id VARCHAR)"
+		errs := helper.MasterExec_Get(repository.DbPg, &results)
+		if errs != nil {
+			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"code":  200,
+			"error": false,
+			"data":  results,
+		})
+		return
+	}
+
+	// If we reach here, the parameter is invalid
+	c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid parameter value: " + Parameter.Parameter})
 }
 
 // GetListtComments godoc
