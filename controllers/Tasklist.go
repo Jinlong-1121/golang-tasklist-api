@@ -183,13 +183,13 @@ func (repository *InitRepo) ValidateDocType(c *gin.Context) {
 	}
 
 	type DocTypeTableResult struct {
-		Document_Id    string `json:"document_id" gorm:"varchar(100);"`
-		Document_Type  string `json:"document_type" gorm:"varchar(100);"`
-		Created_Date   string `json:"created_date" gorm:"varchar(100);"`
-		Status         string `json:"status" gorm:"varchar(100);"`
-		Task_Id        string `json:"task_id" gorm:"varchar(100);"`
-		Document_Name  string `json:"document_name" gorm:"varchar(100);"`
-		File_Object_Id string `json:"file_object_id" gorm:"varchar(100);"`
+		Document_Id     string `json:"document_id" gorm:"varchar(100);"`
+		Document_Type   string `json:"document_type" gorm:"varchar(100);"`
+		Created_Date    string `json:"created_date" gorm:"varchar(100);"`
+		Document_Status string `json:"document_status" gorm:"varchar(100);"`
+		Task_Id         string `json:"task_id" gorm:"varchar(100);"`
+		Document_Name   string `json:"document_name" gorm:"varchar(100);"`
+		File_Object_Id  string `json:"file_object_id" gorm:"varchar(100);"`
 	}
 
 	if Parameter.Parameter == "GET_DROPDOWN" {
@@ -210,7 +210,7 @@ func (repository *InitRepo) ValidateDocType(c *gin.Context) {
 
 	if Parameter.Parameter == "GET_TABLE_DATA" {
 		var results []DocTypeTableResult
-		helper.MasterQuery = "SELECT * FROM public.validate_doc_type('" + Parameter.Param + "','" + Parameter.Parameter + "') AS t(Document_Id VARCHAR, Document_Type VARCHAR, Created_Date VARCHAR, Status VARCHAR, Task_Id VARCHAR, Document_Name VARCHAR, File_Object_Id VARCHAR)"
+		helper.MasterQuery = "SELECT * FROM public.validate_doc_type('" + Parameter.Param + "','" + Parameter.Parameter + "') AS t(Document_Id VARCHAR, Document_Type VARCHAR, Created_Date VARCHAR, Document_Status VARCHAR, Task_Id VARCHAR, Document_Name VARCHAR, File_Object_Id VARCHAR)"
 		errs := helper.MasterExec_Get(repository.DbPg, &results)
 		if errs != nil {
 			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs.Error()})
