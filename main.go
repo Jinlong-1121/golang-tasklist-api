@@ -6,6 +6,7 @@ import (
 	"go-todolist/cors"
 	"go-todolist/docs"
 	"io"
+	"net/http"
 	"os"
 	"time"
 
@@ -14,25 +15,13 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-// @title           Tasklist API
-// @version         1.0
-// @description     A Tasklist management service API in Go using Gin framework.
-// @termsOfService  http://swagger.io/terms/
-
-// @contact.name   API Support
-// @contact.url    http://www.swagger.io/support
-// @contact.email  support@swagger.io
-
-// @license.name  Apache 2.0
-// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
-
-// @host      localhost:8086
-// @BasePath  /api/v1
-
-// @securityDefinitions.apikey Bearer
-// @in header
-// @name Authorization
-// @description Type "Bearer" followed by a space and JWT token.
+// @title Todo List API
+// @version 1.0
+// @description This is a sample server for a Todo List API.
+// @termsOfService http://swagger.io/terms/
+// @contact.name API Support
+// @contact.url http://www.swagger.io/support
+// @contact.email support@swagger.io
 
 const (
 	YYYYMMDD = "2006-01-02"
@@ -45,7 +34,7 @@ type InputRequest struct {
 func main() {
 	docs.SwaggerInfo.BasePath = "/api/v1"
 	r := setupRouter()
-	if err := r.Run(":8086"); err != nil {
+	if err := r.Run(":6060"); err != nil {
 		fmt.Printf("Failed to start server: %v\n", err)
 	}
 }
@@ -55,7 +44,6 @@ func setupRouter() *gin.Engine {
 		fmt.Printf("Failed to create logs directory: %v\n", err)
 		os.Exit(1)
 	}
-
 	now := time.Now().UTC()
 	timeName := now.Format(YYYYMMDD)
 	logFile, err := os.Create("logs/" + timeName + ".log")
@@ -63,13 +51,10 @@ func setupRouter() *gin.Engine {
 		fmt.Printf("Failed to create log file: %v\n", err)
 		os.Exit(1)
 	}
-
 	gin.DisableConsoleColor()
 	gin.DefaultWriter = io.MultiWriter(logFile)
 	gin.SetMode(gin.ReleaseMode)
-
 	r := gin.Default()
-
 	r.Use(gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
 		return fmt.Sprintf("{\"client_ip\":\"%s\", \"access_time\": \"%s\", \"method\": \"%s\", \"endpoint\": \"%s\", \"status_code\": %d, \"latency\": \"%s\", \"user_agent\": \"%s\", \"error\": \"%s\"}\n",
 			param.ClientIP,
@@ -82,9 +67,10 @@ func setupRouter() *gin.Engine {
 			param.ErrorMessage,
 		)
 	}))
-
 	r.Use(gin.Recovery())
 	r.Use(cors.Default())
+
+	// registerRoutes(v1)
 
 	initrepo := controllers.NewConnection()
 
@@ -118,9 +104,30 @@ func setupRouter() *gin.Engine {
 			Tasklist.POST("/InsertingSubtask", initrepo.InsertingSubtask)
 			Tasklist.POST("/SendingNotifDone", initrepo.SendingNotifDone)
 			Tasklist.GET("/GetTaskID", initrepo.GetTaskID)
+			Tasklist.GET("/MasterTagging", initrepo.MasterTagging)
+
 		}
 	}
-
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	r.Run(":8086")
 	return r
+}
+
+// func registerRoutes(v1 *gin.RouterGroup) {
+// 	v1.GET("/ping.php", pingHandler)
+// 	v1.POST("/ping", pingPostHandler)
+// 	v1.GET("/Tasklist/Departemen", controllers.GetDepartemen)
+// }
+
+func pingHandler(c *gin.Context) {
+	c.JSON(http.StatusOK, "pong")
+}
+
+func pingPostHandler(c *gin.Context) {
+	var input InputRequest
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, input)
 }

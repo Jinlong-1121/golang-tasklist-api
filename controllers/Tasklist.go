@@ -1082,7 +1082,7 @@ func (repository *InitRepo) InsertingTaskManual(c *gin.Context) {
 // @Description Upload a file to the specified bucket using the file path and file name.
 // @Accept json
 // @Produce json
-// @Param file body models.FileUpload.FilePath true "File Upload Info"
+// @Param file body models.FileUpload true "File Upload Info"
 // @Success 200 {object} map[string]string "Successfully uploaded"
 // @Failure 400 {object} map[string]string "Invalid input"
 // @Failure 500 {object} map[string]string "Internal server error"
@@ -1108,7 +1108,7 @@ func (repository *InitRepo) UploadingFile(c *gin.Context) {
 // @Summary Upload a file
 // @Accept json
 // @Produce json
-// @Param file body models.FileUpload.FilePath true "File Upload Info"
+// @Param file body models.FileUpload true "File Upload Info"
 // @Success 200 {object} map[string]string "Successfully uploaded"
 // @Failure 400 {object} map[string]string "Invalid input"
 // @Failure 500 {object} map[string]string "Internal server error"
@@ -1570,7 +1570,6 @@ func (repository *InitRepo) CreateCategory(c *gin.Context) {
 // @Router /Tasklist/GetTaskCategory [get]
 func (repository *InitRepo) GetTaskCategory(c *gin.Context) {
 	var taskCategories []models.TaskCategory
-
 	helper.MasterQuery = models.Query_GetTaskCategory
 	errs := helper.MasterExec_Get(repository.DbPg, &taskCategories)
 	if errs != nil {
@@ -1581,5 +1580,42 @@ func (repository *InitRepo) GetTaskCategory(c *gin.Context) {
 		"code":  200,
 		"error": false,
 		"data":  taskCategories,
+	})
+}
+
+// MasterTagging
+// @Summary Master Tagging
+// @Description Get all master tagging from the master_tagging
+// @Param param query string false "PARAM"
+// @Param tagging query string false "TAGGING"
+// @Tags Tasklist
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.MasterTagging
+// @Failure 500 {object} map[string]interface{}
+// @Router /Tasklist/MasterTagging [get]
+func (repository *InitRepo) MasterTagging(c *gin.Context) {
+	var masterTaggings []models.MasterTagging
+	// var Parameter models.MasterTagging_Param
+
+	param := c.Query("param")
+	tagging := c.Query("tagging")
+
+	// if param == "FETCH_TAGGING" {
+	// 	helper.MasterQuery = models.Query_Tagging + "('" + param + "', '') AS t(tag_id TEXT, tag_name TEXT);"
+	// }
+	// if param == "ADD_TAGGING" {
+	// 	helper.MasterQuery = models.Query_Tagging + "('" + param + "', '" + tagging + "') AS t(tag_id TEXT, tag_name TEXT);"
+	// }
+	helper.MasterQuery = models.Query_Tagging + "('" + param + "', '" + tagging + "') AS t(tag_id TEXT, tag_name TEXT);"
+	errs := helper.MasterExec_Get(repository.DbPg, &masterTaggings)
+	if errs != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": errs})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code":  200,
+		"error": false,
+		"data":  masterTaggings,
 	})
 }

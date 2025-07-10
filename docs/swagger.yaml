@@ -1,4 +1,3 @@
-basePath: /api/v1
 definitions:
   models.CategoryList:
     properties:
@@ -159,6 +158,13 @@ definitions:
       topic:
         type: string
     type: object
+  models.MasterTagging:
+    properties:
+      tag_id:
+        type: string
+      tag_name:
+        type: string
+    type: object
   models.ParamClickedNotif:
     properties:
       taskid:
@@ -201,18 +207,14 @@ definitions:
       task_id:
         type: string
     type: object
-host: localhost:8086
 info:
   contact:
     email: support@swagger.io
     name: API Support
     url: http://www.swagger.io/support
-  description: A Tasklist management service API in Go using Gin framework.
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: This is a sample server for a Todo List API.
   termsOfService: http://swagger.io/terms/
-  title: Tasklist API
+  title: Todo List API
   version: "1.0"
 paths:
   /Tasklist/CreateCategory:
@@ -584,6 +586,35 @@ paths:
               type: string
             type: object
       summary: Inserting Task Manual
+  /Tasklist/MasterTagging:
+    get:
+      consumes:
+      - application/json
+      description: Get all master tagging from the master_tagging
+      parameters:
+      - description: PARAM
+        in: query
+        name: param
+        type: string
+      - description: TAGGING
+        in: query
+        name: tagging
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.MasterTagging'
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Master Tagging
+      tags:
+      - Tasklist
   /Tasklist/SendingNotifDone:
     post:
       parameters:
@@ -787,10 +818,4 @@ paths:
       summary: Get document type validation
       tags:
       - Tasklist
-securityDefinitions:
-  Bearer:
-    description: Type "Bearer" followed by a space and JWT token.
-    in: header
-    name: Authorization
-    type: apiKey
 swagger: "2.0"

@@ -1,22 +1,16 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "A Tasklist management service API in Go using Gin framework.",
-        "title": "Tasklist API",
+        "description": "This is a sample server for a Todo List API.",
+        "title": "Todo List API",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "name": "API Support",
             "url": "http://www.swagger.io/support",
             "email": "support@swagger.io"
         },
-        "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-        },
         "version": "1.0"
     },
-    "host": "localhost:8086",
-    "basePath": "/api/v1",
     "paths": {
         "/Tasklist/CreateCategory": {
             "post": {
@@ -579,6 +573,50 @@
                 }
             }
         },
+        "/Tasklist/MasterTagging": {
+            "get": {
+                "description": "Get all master tagging from the master_tagging",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tasklist"
+                ],
+                "summary": "Master Tagging",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "PARAM",
+                        "name": "param",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "TAGGING",
+                        "name": "tagging",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.MasterTagging"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
         "/Tasklist/SendingNotifDone": {
             "post": {
                 "summary": "SendingNotifDone",
@@ -1130,6 +1168,17 @@
                 }
             }
         },
+        "models.MasterTagging": {
+            "type": "object",
+            "properties": {
+                "tag_id": {
+                    "type": "string"
+                },
+                "tag_name": {
+                    "type": "string"
+                }
+            }
+        },
         "models.ParamClickedNotif": {
             "type": "object",
             "properties": {
@@ -1195,14 +1244,6 @@
                     "type": "string"
                 }
             }
-        }
-    },
-    "securityDefinitions": {
-        "Bearer": {
-            "description": "Type \"Bearer\" followed by a space and JWT token.",
-            "type": "apiKey",
-            "name": "Authorization",
-            "in": "header"
         }
     }
 }

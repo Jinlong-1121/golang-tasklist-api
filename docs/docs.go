@@ -15,10 +15,6 @@ const docTemplate = `{
             "url": "http://www.swagger.io/support",
             "email": "support@swagger.io"
         },
-        "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-        },
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
@@ -585,6 +581,50 @@ const docTemplate = `{
                 }
             }
         },
+        "/Tasklist/MasterTagging": {
+            "get": {
+                "description": "Get all master tagging from the master_tagging",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tasklist"
+                ],
+                "summary": "Master Tagging",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "PARAM",
+                        "name": "param",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "TAGGING",
+                        "name": "tagging",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.MasterTagging"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
         "/Tasklist/SendingNotifDone": {
             "post": {
                 "summary": "SendingNotifDone",
@@ -1136,6 +1176,17 @@ const docTemplate = `{
                 }
             }
         },
+        "models.MasterTagging": {
+            "type": "object",
+            "properties": {
+                "tag_id": {
+                    "type": "string"
+                },
+                "tag_name": {
+                    "type": "string"
+                }
+            }
+        },
         "models.ParamClickedNotif": {
             "type": "object",
             "properties": {
@@ -1202,25 +1253,17 @@ const docTemplate = `{
                 }
             }
         }
-    },
-    "securityDefinitions": {
-        "Bearer": {
-            "description": "Type \"Bearer\" followed by a space and JWT token.",
-            "type": "apiKey",
-            "name": "Authorization",
-            "in": "header"
-        }
     }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:8086",
-	BasePath:         "/api/v1",
+	Host:             "",
+	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "Tasklist API",
-	Description:      "A Tasklist management service API in Go using Gin framework.",
+	Title:            "Todo List API",
+	Description:      "This is a sample server for a Todo List API.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

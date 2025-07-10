@@ -273,3 +273,13 @@ var Query_userassignhistory = ""
 func GenerateValue_UserAssignHistory(Param string) {
 	Query_userassignhistory = `Select * from "public"."User_Assign_History"` + "('" + Param + "') AS " + tablereturnuserassignhistory
 }
+
+type MasterTagging struct {
+	TagID   string `json:"tag_id" `
+	TagName string `json:"tag_name"`
+}
+
+type MasterTagging_Param struct {
+	Param   string `json:"param" gorm:"type:varchar(100);"`
+	Tagging string `json:"tagging" gorm:"type:varchar(100);"`
+}
